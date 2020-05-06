@@ -1,0 +1,50 @@
+.dropbox-container {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.dropbox-container > p {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.consent-form {
+    text-align: left;
+}
+
+.sub-form-div {
+    /*margin-top: 1rem;*/
+}
+
+#upload-form {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    width: 600px;
+}
+
+/* responsive, for small screens, use 13px font size */
+@media (max-width: 700px) {
+    #upload-form {
+        width: 100%;
+    }
+}
+
+#consent-form {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.control-group {
+    margin-bottom: 0.5rem;
+}
+
+.control-label {
+    margin-bottom: .25rem;
+}
+
+#upload-instructions-div {
+    font-size: large;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+{% block custom_css %}
+    <link href="{% static "MainApp/css/ext/dropzone.min.css" %}" rel="stylesheet">
+    <link href="{% static "MainApp/css/ext/cropper.min.css" %}" rel="stylesheet">
+    <link href="{% static "MainApp/css/ext/animate.css" %}" rel="stylesheet">
+
+    <link href="{% static "MainApp/css/submit.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div id="upload-form">
+    <form class="consent-form" id="consent-form" action="/submit_consent" enctype="multipart/form-data" method="post">
+        <div id="upload-instructions-div">
+            Upload <b>both</b> your fear drawing, and written fear description below!
+        </div>
+        {% csrf_token %}
+        {{ form.uuid }}
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <div class="dropbox-container">
+                    <p>Fear Drawing:</p>
+                    <div class="dropzone" id="imageDropzone"></div>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="dropbox-container">
+                    <p>Fear Text:</p>
+                    <div class="dropzone" id="textDropzone"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="consent-sub-form" class="sub-form-div">
+            {{ form.consent_checkbox|as_crispy_field }}
+        </div>
+
+        <div id="email-sub-form" class="sub-form-div">
+            {{ form.email_checkbox|as_crispy_field }}
+            {{ form.email|as_crispy_field }}
+        </div>
+
+        <div id="voluntary-info-sub-form" class="sub-form-div">
+            <p style="font-weight: bold;">
+                Voluntary Information Disclosure
+            </p>
+            <p>
+                (This optional information will be used to explore patterns and connections between drawings and writings submitted)
+            </p>
+
+            {{ form.age|as_crispy_field }}
+            {{ form.gender|as_crispy_field }}
+            {{ form.country|as_crispy_field }}
+
+        </div>
+
+        <button class="btn btn-primary mt-3" type="submit" v-on:click="submitForm">
+            Submit
+        </button>
+    </form>
+
+</div>
+
+{% endblock %}
+
+
+{% block custom_js %}
+    <script src="{% static "MainApp/scripts/ext/Math.uuid.js" %}" %}"></script>
+    <script src="{% static "MainApp/scripts/ext/dropzone.min.js" %}" %}"></script>
+    <script src="{% static "MainApp/scripts/ext/cropper.min.js" %}" %}"></script>
+    <script src="{% static "MainApp/scripts/submit.js" %}" %}"></script>
+{% endblock %}

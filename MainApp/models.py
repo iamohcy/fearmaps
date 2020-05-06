@@ -1,0 +1,44 @@
+import uuid
+import os
+from django.db import models
+from sorl.thumbnail import ImageField
+from django_countries.fields import CountryField
+
+# Create your models here.
+class Tag(models.Model):
+    name = models.CharField(max_length=100, primary_key=True)
+
+    def __str__(self):
+        return self.name
+
+class FearItem(models.Model):
+
+    def image_wrapper(instance, filename):
+        ext = filename.split('.')[-1]
+        # get filename
+        if instance.pk:
+            filename = '{}_img.jpg'.format(instance.pk, ext)
+        # return the whole path to the file
+        return os.path.join('image_files/', filename)
+
+    def text_wrapper(instance, filename):
+        ext = filename.split('.')[-1]
+        # get filename
+        if instance.pk:
+            filename = '{}_txt.jpg'.format(instance.pk, ext)
+        # return the whole path to the file
+        return os.path.join('text_files/', filename)
+
+    item_id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+    send_email = models.BooleanField(default=False)
+    email = models.EmailField(max_length = 256, null=True, blank=True)
+    gender = models.CharField(max_length = 256, null=True, blank=True)
+    age = models.IntegerField(null=True, blank=True)
+    tags = models.ManyToManyField(Tag)
+    country = CountryField()
+
+    image_file = models.ImageField(upload_to=image_wrapper)
+    text_file = models.ImageField(upload_to=text_wrapper)
+
+# from MainApp.models import FearItem
+# items = FearItem.objects.all()
