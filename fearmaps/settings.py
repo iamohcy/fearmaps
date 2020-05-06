@@ -25,8 +25,7 @@ SECRET_KEY = 'ry+9=2gr=3g*jsc9043u1jd95u9z&p2e#@z&wz1k!nq&5n-sro'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['167.99.66.170', '127.0.0.1']
 
 # Application definition
 
@@ -45,7 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'sorl.thumbnail',
+    'django_countries',
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'dicedicebaby.ohcy@gmail.com' #CLEAN_THIS
+EMAIL_HOST_PASSWORD = 'ddb570158' #CLEAN_THIS
+EMAIL_PORT = 587
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -81,13 +88,23 @@ WSGI_APPLICATION = 'fearmaps.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'fearapp',
+        'USER': 'iamohcy',
+        'PASSWORD': 'iamohcy2',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -125,7 +142,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static/")
 
 STATIC_URL = '/static/'
 
@@ -133,5 +150,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "www"),
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'www', 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'www', 'media/')
 MEDIA_URL = '/media/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
