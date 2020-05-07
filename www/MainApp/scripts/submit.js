@@ -87,7 +87,8 @@ $(function() {
 
                 this.on("error", function(file, error) {
                     console.log(error);
-                    alert("Image was not sent succesfully! Please refresh the page and try again");
+                    alert(error);
+                    $('#fail_modal').modal('show');
                 })
 
                 this.on("addedfile", function(file) {
@@ -230,11 +231,27 @@ $(function() {
             var self = this;
             this.textDropzone = createNewDropzone("#textDropzone", this.uuid, "text", function() {
                 console.log("ALL DONE!");
-                alert("Submission successful!");
-                window.location.reload(true);
+                $('#success_modal').modal('show');
             });
             this.imageDropzone = createNewDropzone("#imageDropzone", this.uuid, "image", function() {self.textDropzone.processQueue();});
             // window.Dropzone.options.textDropzone = createNewDropzone()
+
+            $('#success_modal').on('shown.bs.modal', function () {
+                $('#new_submission_btn').trigger('focus')
+            })
+
+            $('#success_modal').on('hide.bs.modal', function () {
+                window.location.reload(true);
+            })
+
+            $('#fail_modal').on('shown.bs.modal', function () {
+                $('#refresh_btn').trigger('focus')
+            })
+
+            $('#fail_modal').on('hide.bs.modal', function () {
+                window.location.reload(true);
+            })
+
         }
     });
 });
