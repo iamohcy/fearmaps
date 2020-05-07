@@ -6,7 +6,11 @@ from .forms import SubmissionForm, UploadFileForm
 from .models import FearItem
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return HttpResponse("Hello, this site is still under development.")
+
+def viz(request):
+    context = {"fear_items": FearItem.objects.all()}
+    return render(request, 'MainApp/index.html', context)
 
 def submit(request):
     context = {'form':SubmissionForm()}

@@ -50,7 +50,7 @@ $(function() {
     window.imageBlob = null;
     window.textBlob = null;
 
-    function createNewDropzone(id, uuid, image_type) {
+    function createNewDropzone(id, uuid, image_type, success_callback) {
         var croppedBlob = null;
         var maxFilesReached = false;
 
@@ -82,6 +82,7 @@ $(function() {
 
                 this.on("success", function(file, response) {
                     console.log(response);
+                    success_callback();
                 });
 
                 this.on("addedfile", function(file) {
@@ -207,7 +208,7 @@ $(function() {
                            console.log(data["success"]); // show response from the php script.
                             if (data["success"]) {
                                 self.imageDropzone.processQueue();
-                                self.textDropzone.processQueue();
+
                             }
                             else {
                                 alert("Your response was not uploaded due to a technical error. Please, try again later");
@@ -221,8 +222,9 @@ $(function() {
 
         mounted() {
             Dropzone.autoDiscover = false;
-            this.imageDropzone = createNewDropzone("#imageDropzone", this.uuid, "image");
-            this.textDropzone = createNewDropzone("#textDropzone", this.uuid, "text");
+            var self = this;
+            this.textDropzone = createNewDropzone("#textDropzone", this.uuid, "text", function() {console.log("ALL DONE!")});
+            this.imageDropzone = createNewDropzone("#imageDropzone", this.uuid, "image", function() {self.textDropzone.processQueue();});
             // window.Dropzone.options.textDropzone = createNewDropzone()
         }
     });
