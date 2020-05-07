@@ -1,147 +1,27 @@
-/*********************************************************************************/
-/* COLLECTION */
-/*********************************************************************************/
-
-/*  Thumbnail images */
-/*  This seems a bit ridiculous, but what we're trying to do here is using a
-    padding hack, force square-image-div-wrapper to be a square ratio
-
-    Next we anchor square-image-div to the square-image-div-wrapper with absolute
-    positioning so it doesn't appear below the padding, and use that to center
-    the image in it with flex box positioning*/
-
-.square-image-div-wrapper {
-    width: 100%;
-    padding-bottom: 100%;
-    position: relative;
-    overflow: hidden;
+#main-container {
+    max-width: 1200px;
 }
-
-.square-image-div-wrapper > div{
-    position: absolute;
-    top: 0; bottom: 0; left: 0; right: 0;
-}
-
-.square-image-div {
-/* This is only if we are using img, and not background fill */
-/*    display: flex;
-    align-items: center;*/
-
-/* This is if we are using background-url and fill*/
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-size: cover;
-    background-position: center top;
-}
-
-.bg-container, .curated-bg-container {
+#main-container .fear-image {
+    max-width: 19.7%;
     padding: 5px;
 }
 
-.fill {
-    overflow: hidden;
-    background-size: cover;
-    background-position: center;
+#main-container .text-image {
+    max-width: 100%;
+    padding: 5px;
 }
 
-.bg-card > .card-body {
-    padding: 0.75rem;
+.fear-item-row {
+    background-color: white;
+    padding: 0px;
 }
 
-.bg-card .card-title {
-    margin-bottom: 0px;
-    font-size: 1.0rem;
+.fear-image-div {
+    background-color: #999;
+    padding: 0px;
 }
 
-.bg-card .card-vote-count {
-    margin-top: 5px;
-    margin-bottom: 0px;
-    font-size: 1.0rem;
-    color: #3333ee;
-}
-
-.wrapper-div {
-    margin-left: auto;
-    margin-right: auto;
-    padding-left:2em;
-    padding-right:2em;
-}
-
-@media (min-width: 768px) {
-    .wrapper-div {
-        width: 100%;
-    }
-}
-
-@media (min-width: 992px) {
-    .wrapper-div {
-        width: 90%;
-    }
-}
-
-@media (min-width: 1500px) {
-    .wrapper-div {
-        width: 80%;
-    }
-}
-
-@media (min-width: 1800px) {
-    .wrapper-div {
-        width: 65%;
-    }
-}
-
-@media (min-width: 0px) {
-    .bg-container {
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 50% !important;
-        flex: 0 0 50% !important;
-        max-width: 50%;
-    }
-}
-
-@media (min-width: 576px) {
-    .bg-container {
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 33% !important;
-        flex: 0 0 33% !important;
-        max-width: 33%;
-    }
-}
-
-@media (min-width: 768px) {
-    .bg-container {
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 25% !important;
-        flex: 0 0 25% !important;
-        max-width: 25%;
-    }
-}
-
-@media (min-width: 992px) {
-    .bg-container {
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 20% !important;
-        flex: 0 0 20% !important;
-        max-width: 20%;
-    }
-}
-
-@media (min-width: 1200px) {
-    .bg-container {
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 16.6% !important;
-        flex: 0 0 16.6% !important;
-        max-width: 16.6%;
-    }
-}
-
-@media (min-width: 1500px) {
-    .bg-container {
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 14.28% !important;
-        flex: 0 0 14.28% !important;
-        max-width: 14.28%;
-    }
+.text-image-div {
+    background-color: #bbb;
+    padding: 0px;
 }

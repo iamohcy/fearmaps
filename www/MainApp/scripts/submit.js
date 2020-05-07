@@ -50,16 +50,22 @@ $(function() {
     window.imageBlob = null;
     window.textBlob = null;
 
-    function createNewDropzone(id, uuid, image_type, success_callback) {
-        var croppedBlob = null;
+    function createNewDropzone(id, uuid, image_type, complete_callback) {
+        var croppedBlobs = {};
         var maxFilesReached = false;
+        var maxFiles = 1;
+
+        if (image_type == "image") {
+            maxFiles = 5;
+        }
 
         return new Dropzone(id, {
             url: '/submit_images',
             autoProcessQueue: false,
-            maxFiles: 1,
+            maxFiles: maxFiles,
+            maxFilesize: 20,
             transformFile: function(file, done) {
-                done(croppedBlob);
+                done(croppedBlobs[file.queueNumber]);
             },
             headers:{
                 'X-CSRFToken' : csrftoken,
@@ -80,9 +86,18 @@ $(function() {
                     maxFilesReached = true;
                 });
 
+                this.on("queuecomplete", function(file, response) {
+                    complete_callback();
+                    this.options.autoProcessQueue = false;
+                });
+
                 this.on("success", function(file, response) {
                     console.log(response);
-                    success_callback();
+                    if (!response["success"]) {
+                        console.log(response["error"]);
+                        alert(response["error"]);
+                        $('#fail_modal').modal('show');
+                    }
                 });
 
                 this.on("error", function(file, error) {
@@ -112,16 +127,20 @@ $(function() {
                     // Create the confirm button
                     var confirm = document.createElement('button');
                     confirm.style.position = 'absolute';
-                    confirm.style.left = '10px';
-                    confirm.style.top = '10px';
+                    confirm.style.left = '80px';
+                    confirm.style.height = '40px';
+                    confirm.style.fontSize = 'large';
+                    confirm.style.top = '20px';
                     confirm.style.zIndex = 9999;
                     confirm.textContent = 'Confirm';
+                    confirm.style.textAlign = "center";
+                    confirm.style.lineHeight = "50%";
                     confirm.addEventListener('click', function() {
 
                         // Get the canvas with image data from Cropper.js
-                        var canvas = cropper.getCroppedCanvas({
-                            width: 1000,
-                            height: 1000
+                        var canvas = myDropZone.cropper.getCroppedCanvas({
+                            width: 2000,
+                            height: 2000
                         });
 
                         // Turn the canvas into a Blob (file object without a name)
@@ -139,7 +158,13 @@ $(function() {
                                     myDropZone.emit('thumbnail', file, dataURL);
 
                                     // Return modified file to dropzone
-                                    croppedBlob = blob;
+                                    // croppedBlob = blob;
+                                    var queueNumber = myDropZone.getQueuedFiles().length;
+                                    file.queueNumber = queueNumber;
+                                    // console.log(file);
+                                    // console.log(myDropZone.getQueuedFiles().length)
+
+                                    croppedBlobs[queueNumber] = blob;
                                     // done(blob);
                                 }
                             );
@@ -152,6 +177,29 @@ $(function() {
                     });
                     editor.appendChild(confirm);
 
+                    // Create the rotation right button
+                    var rotate_right = document.createElement('button');
+                    rotate_right.style.position = 'absolute';
+                    rotate_right.style.left = '20px';
+                    rotate_right.style.top = '20px';
+                    rotate_right.style.width = '40px';
+                    rotate_right.style.height = '40px';
+                    rotate_right.style.zIndex = 9999;
+                    rotate_right.style.textAlign = "center";
+                    rotate_right.style.lineHeight = "50%";
+
+                    var icon = document.createElement('i')
+                    icon.setAttribute("class", "fa fa-rotate-right")
+                    icon.style.fontColor = "#555";
+                    icon.style.fontSize = "20px";
+                    rotate_right.append(icon);
+
+                    rotate_right.addEventListener('click', function() {
+                        myDropZone.cropper.rotate(90);
+                    });
+                    editor.appendChild(rotate_right);
+
+
                     // Load the image
                     var image = new Image();
                     image.src = URL.createObjectURL(file);
@@ -161,8 +209,9 @@ $(function() {
                     document.body.appendChild(editor);
 
                     // Create Cropper.js and pass image
-                    var cropper = new window.Cropper(image, {
-                        aspectRatio: 1
+                    myDropZone.cropper = new window.Cropper(image, {
+                        aspectRatio: 1,
+                        rotatable: true,
                     });
                 });
             }
@@ -213,11 +262,13 @@ $(function() {
                         success: function(data) {
                            console.log(data["success"]); // show response from the php script.
                             if (data["success"]) {
+                                self.imageDropzone.options.autoProcessQueue = true;
                                 self.imageDropzone.processQueue();
-
                             }
                             else {
-                                alert("Your response was not uploaded due to a technical error. Please, try again later");
+                                console.log(response["error"]);
+                                alert(response["error"]);
+                                $('#fail_modal').modal('show');
                             }
                         }
                     });
@@ -230,10 +281,29 @@ $(function() {
             Dropzone.autoDiscover = false;
             var self = this;
             this.textDropzone = createNewDropzone("#textDropzone", this.uuid, "text", function() {
-                console.log("ALL DONE!");
-                $('#success_modal').modal('show');
+                console.log("Text queue DONE!");
+                $.ajax({
+                    type: "POST",
+                    url: "/complete_submission",
+                    ContentType: 'application/json',
+                    data: {'uuid':self.uuid}, // serializes the form's elements.
+                    success: function(data) {
+                       console.log(data["success"]); // show response from the php script.
+                        if (data["success"]) {
+                            $('#success_modal').modal('show');
+                        }
+                        else {
+                            console.log(data["error"]);
+                            alert(data["error"]);
+                            $('#fail_modal').modal('show');
+                        }
+                    }
+                });
             });
-            this.imageDropzone = createNewDropzone("#imageDropzone", this.uuid, "image", function() {self.textDropzone.processQueue();});
+            this.imageDropzone = createNewDropzone("#imageDropzone", this.uuid, "image", function() {
+                console.log("Image queue DONE!");
+                self.textDropzone.processQueue();
+            });
             // window.Dropzone.options.textDropzone = createNewDropzone()
 
             $('#success_modal').on('shown.bs.modal', function () {
