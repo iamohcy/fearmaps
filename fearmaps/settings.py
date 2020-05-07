@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'sorl.thumbnail',
     'django_countries',
+    'django_extensions',
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
