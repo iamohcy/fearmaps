@@ -9,7 +9,8 @@ def index(request):
     return HttpResponse("Hello, this site is still under development.")
 
 def viz(request):
-    context = {"fear_items": FearItem.objects.all()}
+    filtered_fear_items = Book.objects.exclude(image_file__isnull=True).exclude(text_file__isnull=True)
+    context = {"fear_items": filtered_fear_items}
     return render(request, 'MainApp/index.html', context)
 
 def submit(request):

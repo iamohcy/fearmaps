@@ -85,6 +85,11 @@ $(function() {
                     success_callback();
                 });
 
+                this.on("error", function(file, error) {
+                    console.log(error);
+                    alert("Image was not sent succesfully! Please refresh the page and try again");
+                })
+
                 this.on("addedfile", function(file) {
 
                     if (maxFilesReached) {
@@ -223,7 +228,11 @@ $(function() {
         mounted() {
             Dropzone.autoDiscover = false;
             var self = this;
-            this.textDropzone = createNewDropzone("#textDropzone", this.uuid, "text", function() {console.log("ALL DONE!")});
+            this.textDropzone = createNewDropzone("#textDropzone", this.uuid, "text", function() {
+                console.log("ALL DONE!");
+                alert("Submission successful!");
+                window.location.reload(true);
+            });
             this.imageDropzone = createNewDropzone("#imageDropzone", this.uuid, "image", function() {self.textDropzone.processQueue();});
             // window.Dropzone.options.textDropzone = createNewDropzone()
         }
