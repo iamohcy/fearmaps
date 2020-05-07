@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block custom_css %}
+    <!-- Main.css -->
+    <link href="{% static "MainApp/css/main.css" %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+<!-- COLLECTION AREA -->
+<div id="collection-div" class="d-flex flex-wrap wrapper-div pt-4">
+    {% for fear_item in fear_items %}
+    <div class="bg-container">
+        <div class="card h-100 bg-card">
+            <div class="square-image-div-wrapper">
+                <div class="square-image-div"
+                    style="background-image: url('{{fear_item.image_file.url}}')">
+                </div>
+            </div>
+            <div class="card-body">
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+
+{% block custom_js %}
+    <!-- Main.js -->
+    <script src="{% static "MainApp/scripts/main.js" %}" %}"></script>
+{% endblock %}
+
