@@ -18,6 +18,20 @@ def viz(request):
     context = {"fear_items": filtered_fear_items}
     return render(request, 'MainApp/viz.html', context)
 
+def delete_entry(request):
+    if request.method == 'POST': # If the form has been submitted...
+        uuid = request.POST['uuid']
+        try:
+            FearItem.objects.get(item_id=uuid).delete()
+            return JsonResponse({"success": True})
+        except Exception as e:
+            return JsonResponse({"success": False, "error":str(e)})
+
+        # form = LinkBggForm(request.POST) # A form bound to the POST data
+        # if form.is_valid(): # All validation rules pass
+    else:
+        return HttpResponse("Invalid non POST call to link_bgg!")
+
 def submit(request):
     context = {'form':SubmissionForm()}
     return render(request, 'MainApp/submit.html', context)
