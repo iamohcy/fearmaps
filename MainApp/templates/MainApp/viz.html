@@ -16,7 +16,7 @@
     {% for fear_item in fear_items %}
 
     <div class="row fear-item-row mt-3">
-        <div class="col-9 fear-image-div">
+        <div class="col-10 fear-image-div">
             {% for fear_image in fear_item.fearimage_set.all %}
                 {% thumbnail fear_image.image_file "500x500" crop="center" as im %}
                     <img src="{{ im.url }}" class="fear-image rounded float-left"">
@@ -31,7 +31,7 @@
             {% endthumbnail %}
         </div>
         <div class="col-1 text-image-div">
-            <button item_id={{fear_item.item_id}} class="delete-btn mt-2">DELETE</button>
+            <button item_id={{fear_item.item_id}} class="delete-btn mt-2">Test</button>
         </div>
     </div>
     {% endfor %}
