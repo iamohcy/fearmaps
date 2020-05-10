@@ -29,6 +29,7 @@ class FearItem(models.Model):
     country = CountryField()
     text_file = models.ImageField(upload_to=text_wrapper)
     valid = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
 
 class FearImage(models.Model):
     def image_wrapper(instance, filename):

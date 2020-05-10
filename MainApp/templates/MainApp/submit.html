@@ -55,7 +55,7 @@
 <div id="upload-form">
     <form class="consent-form" id="consent-form" action="/submit_consent" enctype="multipart/form-data" method="post">
         <div id="upload-instructions-div">
-            Upload <b>both</b> your fear drawing, and written fear description below!
+            Upload <b>both</b> your fear drawing (up to five drawings), and written fear description (one image only) below!
         </div>
         {% csrf_token %}
         {{ form.uuid }}
@@ -74,8 +74,6 @@
                 </div>
             </div>
         </div>
-
-
 
         <div id="consent-sub-form" class="sub-form-div">
             {{ form.consent_checkbox|as_crispy_field }}

@@ -8,10 +8,15 @@ from .models import FearItem, FearImage
 def index(request):
     return HttpResponse("Hello, this site is still under development.")
 
+def submissions(request):
+    filtered_fear_items = FearItem.objects.exclude(valid=False).order_by("-date_created")
+    context = {"fear_items": filtered_fear_items}
+    return render(request, 'MainApp/submissions.html', context)
+
 def viz(request):
     filtered_fear_items = FearItem.objects.exclude(valid=False)
     context = {"fear_items": filtered_fear_items}
-    return render(request, 'MainApp/index.html', context)
+    return render(request, 'MainApp/viz.html', context)
 
 def submit(request):
     context = {'form':SubmissionForm()}
