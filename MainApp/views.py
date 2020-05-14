@@ -5,6 +5,8 @@ from django.http import HttpResponse, JsonResponse
 from .forms import SubmissionForm, UploadFileForm
 from .models import FearItem, FearImage
 
+from django.contrib.auth.decorators import user_passes_test
+
 def index(request):
     return HttpResponse("Hello, this site is still under development.")
 
@@ -13,11 +15,13 @@ def submissions(request):
     context = {"fear_items": filtered_fear_items}
     return render(request, 'MainApp/submissions.html', context)
 
+@user_passes_test(lambda u: u.is_superuser)
 def viz(request):
     filtered_fear_items = FearItem.objects.exclude(valid=False)
     context = {"fear_items": filtered_fear_items}
     return render(request, 'MainApp/viz.html', context)
 
+@user_passes_test(lambda u: u.is_superuser)
 def delete_entry(request):
     if request.method == 'POST': # If the form has been submitted...
         uuid = request.POST['uuid']

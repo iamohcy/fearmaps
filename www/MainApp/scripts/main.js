@@ -34,17 +34,17 @@ $(function() {
 
     $(".delete-btn").on("click", function() {
         console.log($(this).attr("item_id"));
-        // var item_id = $(this).attr("item_id");
-        // $.ajax({
-        //     type: "POST",
-        //     url: "/delete_entry",
-        //     ContentType: 'application/json',
-        //     data: {'uuid':item_id}, // serializes the form's elements.
-        //     success: function(data) {
-        //        console.log(data["success"]); // show response from the php script.
-        //         window.location.reload(true);
-        //     }
-        // });
+        var item_id = $(this).attr("item_id");
+        $.ajax({
+            type: "POST",
+            url: "/delete_entry",
+            ContentType: 'application/json',
+            data: {'uuid':item_id}, // serializes the form's elements.
+            success: function(data) {
+               console.log(data["success"]); // show response from the php script.
+                window.location.reload(true);
+            }
+        });
     })
 })
 
