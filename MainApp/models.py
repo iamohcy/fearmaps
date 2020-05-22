@@ -3,6 +3,7 @@ import os
 from django.db import models
 from sorl.thumbnail import ImageField
 from django_countries.fields import CountryField
+from datetime import datetime
 
 # Create your models here.
 class Tag(models.Model):
@@ -12,13 +13,21 @@ class Tag(models.Model):
         return self.name
 
 class FearItem(models.Model):
-    def text_wrapper(instance, filename):
+    def image_wrapper1(instance, filename):
         ext = filename.split('.')[-1]
         # get filename
         if instance.pk:
-            filename = '{}_txt.jpg'.format(instance.pk, ext)
+            filename = '{}_{}_1.{}'.format(datetime.today().strftime('%Y%m%d'), instance.pk, ext)
         # return the whole path to the file
-        return os.path.join('text_files/', filename)
+        return os.path.join('image_files/', filename)
+
+    def image_wrapper2(instance, filename):
+        ext = filename.split('.')[-1]
+        # get filename
+        if instance.pk:
+            filename = '{}_{}_2.{}'.format(datetime.today().strftime('%Y%m%d'), instance.pk, ext)
+        # return the whole path to the file
+        return os.path.join('image_files/', filename)
 
     item_id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     send_email = models.BooleanField(default=False)
@@ -27,24 +36,29 @@ class FearItem(models.Model):
     age = models.IntegerField(null=True, blank=True)
     tags = models.ManyToManyField(Tag)
     country = CountryField()
-    text_file = models.ImageField(upload_to=text_wrapper)
+
+    fear_text = models.TextField(null=True, blank=False)
+    fear_colors_text = models.TextField(null=True, blank=False)
+
+    image_1 = models.ImageField(upload_to=image_wrapper1)
+    image_2 = models.ImageField(upload_to=image_wrapper2)
     valid = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
 
-class FearImage(models.Model):
-    def image_wrapper(instance, filename):
-        ext = filename.split('.')[-1]
-        # get filename
-        img_idx = instance.fear_item.fearimage_set.count()
-        filename = '{}_{}_img.jpg'.format(instance.fear_item.item_id, img_idx, ext)
-        # return the whole path to the file
-        return os.path.join('image_files/', filename)
+# class FearImage(models.Model):
+#     def image_wrapper(instance, filename):
+#         ext = filename.split('.')[-1]
+#         # get filename
+#         img_idx = instance.fear_item.fearimage_set.count()
+#         filename = '{}_{}_img.jpg'.format(instance.fear_item.item_id, img_idx, ext)
+#         # return the whole path to the file
+#         return os.path.join('image_files/', filename)
 
-    def __str__(self):
-        return self.image_file.url
+#     def __str__(self):
+#         return self.image_file.url
 
-    fear_item = models.ForeignKey(FearItem, on_delete=models.CASCADE)
-    image_file = models.ImageField(upload_to=image_wrapper)
+#     fear_item = models.ForeignKey(FearItem, on_delete=models.CASCADE)
+#     image_file = models.ImageField(upload_to=image_wrapper)
 
 
 # from MainApp.models import FearItem

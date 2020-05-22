@@ -16,31 +16,29 @@
     {% for fear_item in fear_items %}
 
     <div class="row fear-item-row mt-3">
-        <div class="row col-9">
-            <div class="col-10 fear-image-div">
-                {% for fear_image in fear_item.fearimage_set.all %}
-                    {% thumbnail fear_image.image_file "500x500" crop="center" as im %}
-                        <img src="{{ im.url }}" class="fear-image rounded float-left"">
-                        <!-- <img class="fear-image" src="{{fear_image.image_file.url}}" class="rounded float-left" alt="..."> -->
-                    {% endthumbnail %}
-
-                {% endfor %}
-            </div>
-            <div class="col-2 text-image-div">
-                {% thumbnail fear_item.text_file "500x500" crop="center" as im %}
-                    <img src="{{ im.url }}" class="text-image rounded float-left"">
-                {% endthumbnail %}
-            </div>
+        <div class="col-2 fear-image-div">
+            {% thumbnail fear_item.image_1 "500x500" crop="center" as im %}
+                <img src="{{ im.url }}" class="fear-image rounded float-left"">
+            {% endthumbnail %}
         </div>
-        <div class="row col-3">
-            <div class="col-10">
-                {{ fear_item.email }}
-            </div>
-            <div class="col-2">
-                <button item_id={{fear_item.item_id}} class="delete-btn mt-2">Delete</button>
-            </div>
+        <div class="col-2 fear-image-div">
+            {% thumbnail fear_item.image_2 "500x500" crop="center" as im %}
+                <img src="{{ im.url }}" class="fear-image rounded float-left"">
+            {% endthumbnail %}
         </div>
-
+        <div class="col-3">
+            {{ fear_item.fear_text }}
+        </div>
+        <div class="col-3">
+            {{ fear_item.fear_colors_text }}
+        </div>
+        <div class="col-2">
+            <div><b>Email:</b>{{ fear_item.email }}</div>
+            <div><b>Age:</b> {{ fear_item.age }}</div>
+            <div><b>Country:</b> {{ fear_item.country }}</div>
+            <div><b>Date created:</b> {{ fear_item.date_created }}</div>
+            <button item_id={{fear_item.item_id}} class="delete-btn mt-2">Delete</button>
+        </div>
     </div>
     {% endfor %}
 </div>

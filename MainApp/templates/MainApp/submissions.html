@@ -15,14 +15,18 @@
 <div id="fear-image-div" class="grid">
     <div class="grid-sizer"></div>
     {% for fear_item in fear_items %}
-            {% for fear_image in fear_item.fearimage_set.all %}
-                {% thumbnail fear_image.image_file "500x500" crop="center" as im %}
-                    <div class="grid-item">
-                        <img src="{{ im.url }}" class="fear-image""/>
-                    </div>
-                    <!-- <img class="fear-image" src="{{fear_image.image_file.url}}" class="rounded float-left" alt="..."> -->
-                {% endthumbnail %}
-            {% endfor %}
+        {% thumbnail fear_item.image_1 "500x500" crop="center" as im %}
+            <div class="grid-item">
+                <img src="{{ im.url }}" class="fear-image""/>
+            </div>
+            <!-- <img class="fear-image" src="{{fear_image.image_file.url}}" class="rounded float-left" alt="..."> -->
+        {% endthumbnail %}
+        {% thumbnail fear_item.image_2 "500x500" crop="center" as im %}
+            <div class="grid-item">
+                <img src="{{ im.url }}" class="fear-image""/>
+            </div>
+            <!-- <img class="fear-image" src="{{fear_image.image_file.url}}" class="rounded float-left" alt="..."> -->
+        {% endthumbnail %}
     {% endfor %}
 </div>
 

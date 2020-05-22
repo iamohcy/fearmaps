@@ -8,6 +8,7 @@
     <link href="{% static "MainApp/css/ext/cropper.min.css" %}" rel="stylesheet">
     <link href="{% static "MainApp/css/ext/animate.css" %}" rel="stylesheet">
 
+    <link href="{% static "MainApp/css/multistepform.css" %}" rel="stylesheet">
     <link href="{% static "MainApp/css/submit.css" %}" rel="stylesheet">
 {% endblock %}
 
@@ -55,55 +56,104 @@
 
 <div id="upload-form">
     <form class="consent-form" id="consent-form" action="/submit_consent" enctype="multipart/form-data" method="post">
-        <div id="upload-instructions-div">
-            Upload <b>both</b> your fear drawing (up to five drawings), and written fear description (one image only) below!
-        </div>
         {% csrf_token %}
         {{ form.uuid }}
 
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <div class="dropbox-container">
-                    <p>Fear Drawing:</p>
-                    <div class="dropzone" id="imageDropzone"></div>
+        <!-- progressbar -->
+        <ul id="progressbar">
+            <li class="active">Consent Form</li>
+            <li>Describe your Fear</li>
+            <li>Create Drawing #1</li>
+            <li>Create Drawing #2</li>
+            <li>Reflection</li>
+            <li>Upload Images</li>
+        </ul>
+
+        <fieldset>
+            <h2 class="fs-title">Consent Form</h2>
+            <!-- <h3 class="fs-subtitle">S</h3> -->
+            <div id="consent-sub-form" class="sub-form-div">
+                {{ form.consent_checkbox|as_crispy_field }}
+            </div>
+
+            <div id="email-sub-form" class="sub-form-div">
+                {{ form.email_checkbox|as_crispy_field }}
+                {{ form.email|as_crispy_field }}
+            </div>
+
+            <div id="voluntary-info-sub-form" class="sub-form-div">
+                <p style="font-weight: bold;">
+                    Voluntary Information Disclosure
+                </p>
+                <p>
+                    (This optional information will be used to explore patterns and connections between drawings and writings submitted)
+                </p>
+
+                {{ form.age|as_crispy_field }}
+                {{ form.gender|as_crispy_field }}
+                {{ form.country|as_crispy_field }}
+            </div>
+            <input type="button" id="consent-next-btn" name="next" class="next action-button" value="Next" v-on:click="validateConsent"/>
+        </fieldset>
+
+        <fieldset>
+            <h2 class="fs-title">Describe your Fear</h2>
+            <h3 class="fs-subtitle">What are you afraid of?</h3>
+            {{ form.fear_text|as_crispy_field }}
+
+            <h3 class="fs-subtitle">Take a deep breath. Look at the feeling of fear. Can you look at fear itself in the present, without thinking about the past or future? What does fear itself look like? Write down its colours and textures.</h3>
+            {{ form.fear_colors_text|as_crispy_field }}
+            <input type="button" name="previous" class="previous action-button-previous" value="Previous" v-on:click="previous"/>
+            <input type="button" id="consent-next-btn" name="next" class="next action-button" value="Next" v-on:click="validateFearDescription"/>
+        </fieldset>
+
+        <fieldset>
+            <h2 class="fs-title">Create Drawing #1</h2>
+            <h3 class="fs-subtitle">Using the colours of your fear, cover the first square paper with markings and textures that record your observations of fear itself.</h3>
+            <h3 class="fs-subtitle">Keep your drawing abstract and focused on the marks, so that you do not get lost in memories of the past or worries about the future. Watch your fear in the present, and record what you see.</h3>
+            <input type="button" name="previous" class="previous action-button-previous" value="Previous" v-on:click="previous"/>
+            <input type="button" name="next" class="next action-button" value="Next" v-on:click="next"/>
+        </fieldset>
+
+        <fieldset>
+            <h2 class="fs-title">Create Drawing #2</h2>
+            <h3 class="fs-subtitle">Look at your first drawing. Can you observe this same fear but from a different perspective? (Perhaps from above or below, from far away or leaning in very close.) On the second square paper, draw what you see now.</h3>
+            <input type="button" name="previous" class="previous action-button-previous" value="Previous" v-on:click="previous"/>
+            <input type="button" name="next" class="next action-button" value="Next" v-on:click="next"/>
+        </fieldset>
+
+        <fieldset>
+            <h2 class="fs-title">Reflection</h2>
+            <h3 class="fs-subtitle">You have been an observer of fear during this exercise. Take a few moments to breath in and out slowly. When your mind is still, you may realise that the fear is not a separate, but a natural part of you. Fear arises as a result of our thoughts. When we are able to watch fear, without conclusions, without assumptions, we can better live with and learn from it.</h3>
+            <h3 class="fs-subtitle">Once you are ready, click "Next" to upload your drawings.</h3>
+            <input type="button" name="previous" class="previous action-button-previous" value="Previous" v-on:click="previous"/>
+            <input type="button" name="next" class="next action-button" value="Next" v-on:click="next"/>
+        </fieldset>
+
+        <fieldset>
+            <h2 class="fs-title">Upload Drawings</h2>
+            <div id="upload-instructions-div">
+                <h3 class="fs-subtitle">Please scan and upload your drawings as 2 separate images in the box below. Try to crop/rotate the photos to remove any borders.</h3>
+                <h3 class="fs-subtitle">If you do not have a scanner, you can also place your drawing on a flat surface and take a clear photo with your phone camera. If possible, please choose a location with bright natural light so minimise any shadows.</h3>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <div class="dropbox-container">
+                        <p>Drawing #1</p>
+                        <div class="dropzone" id="image1Dropzone"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="dropbox-container">
+                        <p>Drawing #2</p>
+                        <div class="dropzone" id="image2Dropzone"></div>
+                    </div>
                 </div>
             </div>
-            <div class="form-group col-md-6">
-                <div class="dropbox-container">
-                    <p>Fear Text:</p>
-                    <div class="dropzone" id="textDropzone"></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="consent-sub-form" class="sub-form-div">
-            {{ form.consent_checkbox|as_crispy_field }}
-        </div>
-
-        <div id="email-sub-form" class="sub-form-div">
-            {{ form.email_checkbox|as_crispy_field }}
-            {{ form.email|as_crispy_field }}
-        </div>
-
-        <div id="voluntary-info-sub-form" class="sub-form-div">
-            <p style="font-weight: bold;">
-                Voluntary Information Disclosure
-            </p>
-            <p>
-                (This optional information will be used to explore patterns and connections between drawings and writings submitted)
-            </p>
-
-            {{ form.age|as_crispy_field }}
-            {{ form.gender|as_crispy_field }}
-            {{ form.country|as_crispy_field }}
-
-        </div>
-
-        <button class="btn btn-primary mt-3" type="submit" v-on:click="submitForm">
-            Submit
-        </button>
+            <input type="button" name="previous" class="previous action-button-previous" value="Previous" v-on:click="previous"/>
+            <input type="button" name="next" class="next action-button" value="Submit" v-on:click="submitForm"/>
+        </fieldset>
     </form>
-
 </div>
 
 {% endblock %}
@@ -111,8 +161,10 @@
 
 {% block custom_js %}
     <script src="https://kit.fontawesome.com/802ea9d6d1.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" crossorigin="anonymous"></script>
     <script src="{% static "MainApp/scripts/ext/Math.uuid.js" %}"></script>
     <script src="{% static "MainApp/scripts/ext/dropzone.min.js" %}"></script>
     <script src="{% static "MainApp/scripts/ext/cropper.min.js" %}"></script>
     <script src="{% static "MainApp/scripts/submit.js" %}?version=1"></script>
+
 {% endblock %}

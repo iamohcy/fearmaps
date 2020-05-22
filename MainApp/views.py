@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse, JsonResponse
 from .forms import SubmissionForm, UploadFileForm
-from .models import FearItem, FearImage
+from .models import FearItem
 
 from django.contrib.auth.decorators import user_passes_test
 
@@ -69,6 +69,8 @@ def submit_consent(request):
             age = form.cleaned_data["age"]
             uuid = form.cleaned_data["uuid"]
             country = form.cleaned_data["country"]
+            fear_text = form.cleaned_data["fear_text"]
+            fear_colors_text = form.cleaned_data["fear_colors_text"]
 
             try:
                 defaults = {
@@ -77,6 +79,8 @@ def submit_consent(request):
                     "gender": gender,
                     "age": age,
                     "country": country,
+                    "fear_text": fear_text,
+                    "fear_colors_text": fear_colors_text,
                 }
                 fearItem = FearItem.objects.update_or_create(item_id = uuid, defaults=defaults)
                 return JsonResponse({"success": True, "type":"consent"})
@@ -95,18 +99,16 @@ def submit_images(request):
         if form.is_valid():
 
             uuid = form.cleaned_data["uuid"]
-            image_type = form.cleaned_data["image_type"]
+            image_num = form.cleaned_data["image_num"]
             file = request.FILES['file']
             try:
-                if image_type == "image":
-                    (fear_item, created) = FearItem.objects.update_or_create(item_id=uuid)
-
-                    FearImage.objects.create(fear_item=fear_item, image_file=file)
+                if image_num == 1:
+                    FearItem.objects.update_or_create(item_id=uuid, defaults={"image_1": file})
                 else:
-                    FearItem.objects.update_or_create(item_id=uuid, defaults={"text_file": file})
-                return JsonResponse({"success": True, "type":"image", "image_type":image_type})
+                    FearItem.objects.update_or_create(item_id=uuid, defaults={"image_2": file})
+                return JsonResponse({"success": True, "type":"image", "image_num":image_num})
             except Exception as e:
-                return JsonResponse({"success": False, "type":"image", "image_type":image_type, "error":str(e)})
+                return JsonResponse({"success": False, "type":"image", "image_num":image_num, "error":str(e)})
 
         else:
             print(form.errors)

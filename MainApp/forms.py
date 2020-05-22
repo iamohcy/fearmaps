@@ -3,7 +3,9 @@ from django import forms
 from datetime import datetime
 from crispy_forms.helper import FormHelper
 from django_countries import countries
-COUNTRY_CHOICES = tuple(countries)
+COUNTRY_CHOICES = list(countries)
+COUNTRY_CHOICES.insert(0, ("-","-"))
+COUNTRY_CHOICES = tuple(COUNTRY_CHOICES)
 
 START_YEAR = 1940
 class SubmissionForm(forms.Form):
@@ -19,6 +21,9 @@ class SubmissionForm(forms.Form):
     age = forms.IntegerField(widget=forms.NumberInput(), label="Age", required=False)
     country = forms.ChoiceField(choices=COUNTRY_CHOICES, required=False, label="Country")
 
+    fear_text = forms.CharField(widget=forms.Textarea(), label="", required=True)
+    fear_colors_text = forms.CharField(widget=forms.Textarea(), label="", required=True)
+
     uuid = forms.UUIDField(widget=forms.HiddenInput())
 
     def __init__(self, *args, **kwargs):
@@ -32,5 +37,5 @@ class SubmissionForm(forms.Form):
 
 class UploadFileForm(forms.Form):
     uuid = forms.UUIDField()
-    image_type = forms.CharField(max_length = 20)
+    image_num = forms.IntegerField()
     file = forms.FileField()

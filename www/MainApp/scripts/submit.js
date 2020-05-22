@@ -1,5 +1,6 @@
 $(function() {
 
+
     function animateCSS(element, animationName, callback) {
         const node = document.querySelector(element)
         node.classList.add('animated', animationName)
@@ -50,14 +51,10 @@ $(function() {
     window.imageBlob = null;
     window.textBlob = null;
 
-    function createNewDropzone(id, uuid, image_type, complete_callback) {
+    function createNewDropzone(id, uuid, image_num, complete_callback) {
         var croppedBlobs = {};
         var maxFilesReached = false;
         var maxFiles = 1;
-
-        if (image_type == "image") {
-            maxFiles = 5;
-        }
 
         return new Dropzone(id, {
             url: '/submit_images',
@@ -72,7 +69,7 @@ $(function() {
             },
             params: {
                 uuid: uuid,
-                image_type: image_type,
+                image_num: image_num,
             },
 
             // accept: function(file, done) {
@@ -127,7 +124,7 @@ $(function() {
                     // Create the confirm button
                     var confirm = document.createElement('button');
                     confirm.style.position = 'absolute';
-                    confirm.style.left = '80px';
+                    confirm.style.left = '260px';
                     confirm.style.height = '40px';
                     confirm.style.fontSize = 'large';
                     confirm.style.top = '20px';
@@ -177,28 +174,51 @@ $(function() {
                     });
                     editor.appendChild(confirm);
 
-                    // Create the rotation right button
-                    var rotate_right = document.createElement('button');
-                    rotate_right.style.position = 'absolute';
-                    rotate_right.style.left = '20px';
-                    rotate_right.style.top = '20px';
-                    rotate_right.style.width = '40px';
-                    rotate_right.style.height = '40px';
-                    rotate_right.style.zIndex = 9999;
-                    rotate_right.style.textAlign = "center";
-                    rotate_right.style.lineHeight = "50%";
+                    function createRotateButton(rotation_degrees, rotation_direction, left) {
+                        // Create the rotation right button
+                        var rotate_right = document.createElement('button');
+                        rotate_right.style.position = 'absolute';
+                        rotate_right.style.left = left + 'px';
+                        rotate_right.style.top = '20px';
+                        // rotate_right.style.width = '40px';
+                        rotate_right.style.height = '40px';
+                        rotate_right.style.zIndex = 9999;
+                        rotate_right.style.textAlign = "center";
+                        rotate_right.style.lineHeight = "50%";
+                        rotate_right.style.paddingLeft = "5px";
+                        rotate_right.style.paddingRight = "5px";
 
-                    var icon = document.createElement('i')
-                    icon.setAttribute("class", "fa fa-rotate-right")
-                    icon.style.fontColor = "#555";
-                    icon.style.fontSize = "20px";
-                    rotate_right.append(icon);
+                        var icon = document.createElement('i')
+                        if (rotation_direction == "right") {
+                            icon.setAttribute("class", "fa fa-rotate-right")
+                        }
+                        else {
+                            icon.setAttribute("class", "fa fa-rotate-left")
+                        }
+                        icon.style.fontColor = "#555";
+                        icon.style.fontSize = "20px";
+                        rotate_right.append(icon);
 
-                    rotate_right.addEventListener('click', function() {
-                        myDropZone.cropper.rotate(90);
-                    });
-                    editor.appendChild(rotate_right);
+                        var span = document.createElement('span')
+                        span.textContent = rotation_degrees + "°";
+                        span.style.fontSize = "20px";
+                        span.style.marginLeft = "5px";
+                        rotate_right.style.marginLeft = "5px";
+                        rotate_right.append(span);
 
+                        if (rotation_direction != "right") {
+                            rotation_degrees = -rotation_degrees;
+                        }
+
+                        rotate_right.addEventListener('click', function() {
+                            myDropZone.cropper.rotate(rotation_degrees);
+                        });
+
+                        return rotate_right;
+                    }
+                    editor.appendChild(createRotateButton(90, "right", 20));
+                    editor.appendChild(createRotateButton(5, "right", 100));
+                    editor.appendChild(createRotateButton(5, "left", 165));
 
                     // Load the image
                     var image = new Image();
@@ -225,26 +245,138 @@ $(function() {
         addRemoveLinks: true,
         data () {
             return {
-                imageDropzone: null,
-                textDropzone: null,
+                image1Dropzone: null,
+                image2Dropzone: null,
                 uuid: Math.uuid(),
+
+                ms_props: { // multistep form properties
+                    current_fs: null, next_fs: null, previous_fs: null, //fieldsets
+                    left: null, opacity: null, scale: null, //fieldset properties which we will animate
+                    animating: null, //flag to prevent quick multi-click glitches
+                }
             };
         },
         methods: {
+            validateConsent: function(event) {
+                var consentGiven = $("#id_consent_checkbox").prop("checked");
+                if (!consentGiven) {
+                    animateCSS("#div_id_consent_checkbox", "pulse");
+                }
+                else {
+                    this.next(event);
+                }
+            },
+            validateFearDescription: function(event) {
+                var fearTextPresent = ($("#id_fear_text").val()).length > 0
+                var fearColorsTextPresent = ($("#id_fear_colors_text").val()).length > 0
+                if (!fearTextPresent) {
+                    animateCSS("#id_fear_text", "pulse");
+                }
+                else {
+                    if (!fearColorsTextPresent) {
+                        animateCSS("#id_fear_colors_text", "pulse");
+                    }
+                    else {
+
+                        // Submit consent form
+
+
+                        this.next(event);
+                    }
+                }
+            },
+            previous: function(event) {
+                var self = this;
+                var ms_props = self.ms_props;
+
+                if(ms_props.animating) return false;
+                ms_props.animating = true;
+
+                ms_props.current_fs = $(event.target).parent();
+                ms_props.previous_fs = $(event.target).parent().prev();
+
+                //de-activate current step on progressbar
+                $("#progressbar li").eq($("fieldset").index(ms_props.current_fs)).removeClass("active");
+
+                //show the previous fieldset
+                ms_props.previous_fs.show();
+                //hide the current fieldset with style
+                ms_props.current_fs.animate({"opacity": 0}, {
+                    step: function(now, mx) {
+                        //as the opacity of current_fs reduces to 0 - stored in "now"
+                        //1. scale previous_fs from 80% to 100%
+                        ms_props.scale = 0.8 + (1 - now) * 0.2;
+                        //2. take current_fs to the right(50%) - from 0%
+                        ms_props.left = ((1-now) * 50)+"%";
+                        //3. increase opacity of previous_fs to 1 as it moves in
+                        ms_props.opacity = 1 - now;
+                        ms_props.current_fs.css({'left': ms_props.left});
+                        ms_props.previous_fs.css({'transform': 'scale('+ms_props.scale+')', 'opacity': ms_props.opacity});
+                    },
+                    duration: 800,
+                    complete: function(){
+                        ms_props.current_fs.hide();
+                        ms_props.animating = false;
+                    },
+                    //this comes from the custom easing plugin
+                    easing: 'easeInOutBack'
+                });
+            },
+            next: function(event) {
+                var self = this;
+                var ms_props = self.ms_props;
+
+                if(ms_props.animating) return false;
+                ms_props.animating = true;
+
+                ms_props.current_fs = $(event.target).parent();
+                ms_props.next_fs = $(event.target).parent().next();
+
+                //activate next step on progressbar using the index of ms_props.next_fs
+                $("#progressbar li").eq($("fieldset").index(ms_props.next_fs)).addClass("active");
+
+                //show the next fieldset
+                ms_props.next_fs.show();
+                //hide the current fieldset with style
+                ms_props.current_fs.animate({"opacity": 0}, {
+                    step: function(now, mx) {
+                        //as the opacity of current_fs reduces to 0 - stored in "now"
+                        //1. scale current_fs down to 80%
+                        ms_props.scale = 1 - (1 - now) * 0.2;
+                        //2. bring next_fs from the right(50%)
+                        ms_props.left = (now * 50)+"%";
+                        //3. increase opacity of next_fs to 1 as it moves in
+                        ms_props.opacity = 1 - now;
+                        ms_props.current_fs.css({
+                    'transform': 'scale('+ms_props.scale+')',
+                    'position': 'absolute'
+                  });
+                        ms_props.next_fs.css({'left': ms_props.left, 'opacity': ms_props.opacity});
+                    },
+                    duration: 800,
+                    complete: function(){
+                        ms_props.current_fs.hide();
+                        ms_props.animating = false;
+                    },
+                    //this comes from the custom easing plugin
+                    easing: 'easeInOutBack'
+                });
+            },
             // submitForm: function(event) {
             submitForm: function(event) {
 
                 var self = this;
                 event.preventDefault();
 
-                var numImageFiles = $('#imageDropzone').get(0).dropzone.getAcceptedFiles().length;
-                var numTextFiles = $('#textDropzone').get(0).dropzone.getAcceptedFiles().length;
+                var image1Present = $('#image1Dropzone').get(0).dropzone.getAcceptedFiles().length >= 1;
+                var image2Present = $('#image2Dropzone').get(0).dropzone.getAcceptedFiles().length >= 1;
+                var bothPresent = image1Present && image2Present;
 
                 var consentGiven = $("#id_consent_checkbox").prop("checked");
-                if (!consentGiven) {
-                    animateCSS("#div_id_consent_checkbox", "pulse");
-                }
-                else if ((numImageFiles < 1) || (numTextFiles < 1)) {
+                // if (!consentGiven) {
+                //     animateCSS("#div_id_consent_checkbox", "pulse");
+                // }
+                if (!bothPresent) {
                     animateCSS("#upload-instructions-div", "pulse");
                 }
                 else {
@@ -262,8 +394,8 @@ $(function() {
                         success: function(data) {
                            console.log(data["success"]); // show response from the php script.
                             if (data["success"]) {
-                                self.imageDropzone.options.autoProcessQueue = true;
-                                self.imageDropzone.processQueue();
+                                self.image1Dropzone.options.autoProcessQueue = true;
+                                self.image1Dropzone.processQueue();
                             }
                             else {
                                 console.log(response["error"]);
@@ -280,8 +412,8 @@ $(function() {
         mounted() {
             Dropzone.autoDiscover = false;
             var self = this;
-            this.textDropzone = createNewDropzone("#textDropzone", this.uuid, "text", function() {
-                console.log("Text queue DONE!");
+            this.image2Dropzone = createNewDropzone("#image2Dropzone", this.uuid, 2, function() {
+                console.log("Image 2 queue DONE!");
                 $.ajax({
                     type: "POST",
                     url: "/complete_submission",
@@ -300,11 +432,11 @@ $(function() {
                     }
                 });
             });
-            this.imageDropzone = createNewDropzone("#imageDropzone", this.uuid, "image", function() {
-                console.log("Image queue DONE!");
-                self.textDropzone.processQueue();
+            this.image1Dropzone = createNewDropzone("#image1Dropzone", this.uuid, 1, function() {
+                console.log("Image 1 queue DONE!");
+                self.image2Dropzone.processQueue();
             });
-            // window.Dropzone.options.textDropzone = createNewDropzone()
+            // window.Dropzone.options.image2Dropzone = createNewDropzone()
 
             $('#success_modal').on('shown.bs.modal', function () {
                 $('#new_submission_btn').trigger('focus')
@@ -321,7 +453,6 @@ $(function() {
             $('#fail_modal').on('hide.bs.modal', function () {
                 window.location.reload(true);
             })
-
         }
     });
 });
