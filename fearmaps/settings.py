@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ry+9=2gr=3g*jsc9043u1jd95u9z&p2e#@z&wz1k!nq&5n-sro'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['167.99.66.170', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['167.99.66.170', '127.0.0.1', 'localhost', 'mappingfear.com', '.mappingfear.com']
 
 # Application definition
 
