@@ -72,7 +72,7 @@ body {
     width: 100px;
     background: #ee0979;
     font-weight: bold;
-    color: #2700ff;
+    color: white;
     border: 0 none;
     border-radius: 25px;
     cursor: pointer;
@@ -127,10 +127,10 @@ body {
 
 #progressbar li {
     list-style-type: none;
-    color: white;
+    color: #2700ff;
     text-transform: uppercase;
     font-size: 9px;
-    width: 16.66%;
+    width: 14.286%;
     float: left;
     position: relative;
     letter-spacing: 1px;

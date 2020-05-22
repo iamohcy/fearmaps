@@ -61,13 +61,26 @@
 
         <!-- progressbar -->
         <ul id="progressbar">
-            <li class="active">Consent Form</li>
+            <li class="active">Introduction</li>
+            <li>Consent Form</li>
             <li>Describe your Fear</li>
-            <li>Create Drawing #1</li>
-            <li>Create Drawing #2</li>
+            <li>Drawing #1</li>
+            <li>Drawing #2</li>
             <li>Reflection</li>
             <li>Upload Images</li>
         </ul>
+
+
+        <fieldset>
+            <h2 class="fs-title">Mapping Fear</h2>
+            <h3 class="fs-subtitle mb-3" style="text-align: left;">Hello! This is a collaborative art project that tries to understand what Fear is and how it connects us to each other. This activity will take about 20 minutes. Please gather the following supplies before you begin:</h3>
+            <ul>
+                <li class="fs-subtitle ml-4 mb-1" style="text-align: left;">2 sheets of square paper - appx 21cm x 21cm (please do not fold a diagonal line as the crease will distract from your drawing)</li>
+                <li class="fs-subtitle ml-4 mb-1" style="text-align: left;">Colour pencils, markers or crayons</li>
+            </ul>
+
+            <input type="button" name="next" class="next action-button" value="Next" v-on:click="next"/>
+        </fieldset>
 
         <fieldset>
             <h2 class="fs-title">Consent Form</h2>
@@ -93,6 +106,7 @@
                 {{ form.gender|as_crispy_field }}
                 {{ form.country|as_crispy_field }}
             </div>
+            <input type="button" name="previous" class="previous action-button-previous" value="Previous" v-on:click="previous"/>
             <input type="button" id="consent-next-btn" name="next" class="next action-button" value="Next" v-on:click="validateConsent"/>
         </fieldset>
 
