@@ -59,7 +59,7 @@ body {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    border: 1px solid #ee0979;
+    border: 1px solid #467584;
     outline-width: 0;
     transition: All 0.5s ease-in;
     -webkit-transition: All 0.5s ease-in;
@@ -70,7 +70,8 @@ body {
 /*buttons*/
 #consent-form .action-button {
     width: 100px;
-    background: #ee0979;
+    /*background: #ee0979;*/
+    background: #467584;
     font-weight: bold;
     color: white;
     border: 0 none;
@@ -134,6 +135,7 @@ body {
     float: left;
     position: relative;
     letter-spacing: 1px;
+    color: #611acb;
 }
 
 #progressbar li:before {
@@ -170,7 +172,7 @@ body {
 /*marking active/completed steps green*/
 /*The number of the step and the connector before it = green*/
 #progressbar li.active:before, #progressbar li.active:after {
-    background: #ee0979;
+    background: #467584;
     color: white;
 }
 
@@ -195,3 +197,4 @@ body {
     background: #C5C5F1;
     text-decoration: none;
 }
+
