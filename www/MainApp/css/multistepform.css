@@ -82,7 +82,8 @@ body {
 }
 
 #consent-form .action-button:hover, #consent-form .action-button:focus {
-    box-shadow: 0 0 0 2px white, 0 0 0 3px #ee0979;
+    /*box-shadow: 0 0 0 2px white, 0 0 0 3px #ee0979;*/
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #467584;
 }
 
 #consent-form .action-button-previous {
@@ -185,7 +186,8 @@ body {
 .dme_link a {
     background: #FFF;
     font-weight: bold;
-    color: #ee0979;
+    /*color: #ee0979;*/
+    color: #467584;
     border: 0 none;
     border-radius: 25px;
     cursor: pointer;
