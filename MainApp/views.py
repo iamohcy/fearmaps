@@ -40,6 +40,10 @@ def submit(request):
     context = {'form':SubmissionForm()}
     return render(request, 'MainApp/submit.html', context)
 
+def submit_workshop(request):
+    context = {'form':SubmissionForm()}
+    return render(request, 'MainApp/submit_short.html', context)
+
 def complete_submission(request):
     if request.method == 'POST': # If the form has been submitted...
         print(request.POST)

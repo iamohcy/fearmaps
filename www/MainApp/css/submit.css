@@ -61,3 +61,20 @@
     margin-bottom: 1rem;
 }
 
+#progressbar li.active:before, #progressbar li.active:after {
+    background: #467584;
+}
+
+#progressbar li {
+    color: #611acb;
+}
+
+#upload-form, #consent-form {
+    margin-top: 0px;
+}
+
+body {
+    background: #baf0f0;
+    margin: 0px;
+    padding: 30px;
+}
