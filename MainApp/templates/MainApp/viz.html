@@ -27,10 +27,10 @@
             {% endthumbnail %}
         </div>
         <div class="col-3">
-            {{ fear_item.fear_text }}
+            {{ fear_item.fear_text|linebreaks }}
         </div>
         <div class="col-3">
-            {{ fear_item.fear_colors_text }}
+            {{ fear_item.fear_colors_text|linebreaks }}
         </div>
         <div class="col-2">
             <div><b>Email:</b>{{ fear_item.email }}</div>
