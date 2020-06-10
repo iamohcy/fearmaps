@@ -267,8 +267,8 @@ $(function() {
                 }
             },
             validateFearDescription: function(event) {
-                var fearTextPresent = ($("#id_fear_text").val()).length > 0
-                var fearColorsTextPresent = ($("#id_fear_colors_text").val()).length > 0
+                var fearTextPresent = ($("#id_fear_text").val().trim()).length > 0
+                var fearColorsTextPresent = ($("#id_fear_colors_text").val().trim()).length > 0
                 if (!fearTextPresent) {
                     animateCSS("#id_fear_text", "pulse");
                 }
