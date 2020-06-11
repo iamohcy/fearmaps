@@ -10,8 +10,8 @@ COUNTRY_CHOICES = tuple(COUNTRY_CHOICES)
 START_YEAR = 1940
 class SubmissionForm(forms.Form):
 
-    consent_text = "I consent to my drawings and writings being included as part of the web-based community artwork - Fear Maps"
-    email_text = "I would like to receive a URL link to view my drawing as part of the web-based community artwork - Fear Maps"
+    consent_text = "I consent to my drawings and writings being included as part of the web-based community artwork - Mapping Fear"
+    email_text = "I would like to receive a URL link to view my drawing as part of the web-based community artwork - Mapping Fear"
 
     consent_checkbox = forms.CharField(widget=forms.CheckboxInput(), label=consent_text, required=True)
     email_checkbox = forms.CharField(widget=forms.CheckboxInput(), label=email_text, required=False)
