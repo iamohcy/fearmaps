@@ -16,7 +16,7 @@
     <!-- <div class="grid-sizer"></div> -->
 
     {% for fear_item in fear_items %}
-        <div class="image_blend_div" data-toggle="tooltip" data-placement="right" title="{{fear_item.fear_text}}">
+        <div class="image_blend_div">
             <div class="image2">
                 {% thumbnail fear_item.image_2 "500x500" crop="center" as im %}
                     <img src="{{ im.url }}" class="fear-image""/>
@@ -35,7 +35,9 @@
                     <img src="{{ im.url }}" class="fear-image""/>
                 {% endthumbnail %}
             </div>
-
+            <div class="overlay">
+                <div class="text">{{fear_item.fear_text}}</div>
+            </div>
         </div>
     {% endfor %}
 </div>
