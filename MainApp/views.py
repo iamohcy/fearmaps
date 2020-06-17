@@ -8,7 +8,11 @@ from .models import FearItem
 from django.contrib.auth.decorators import user_passes_test
 
 def index(request):
-    return HttpResponse("Hello, the visualization for this artwork is still under development. Go to <a href='/submit'>this page</a> to submit an entry!")
+    # return HttpResponse("Hello, the visualization for this artwork is still under development. Go to <a href='/submit'>this page</a> to submit an entry!")
+    filtered_fear_items = FearItem.objects.exclude(valid=False).order_by("-date_created")
+    context = {"fear_items": filtered_fear_items}
+    return render(request, 'MainApp/index.html', context)
+
 
 def submissions(request):
     filtered_fear_items = FearItem.objects.exclude(valid=False).order_by("-date_created")
