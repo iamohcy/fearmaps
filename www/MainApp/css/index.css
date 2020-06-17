@@ -72,34 +72,53 @@
 }
 */
 
-
-
 .overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: .5s ease;
-  background-color: rgba(0, 0, 0, 0.0);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    /*opacity: 0;*/
+    transition: .5s ease;
+    background-color: rgba(0, 0, 0, 0.6);
+
+    /*background-color: rgba(0, 0, 0, 0.0);*/
+    overflow: scroll;
 }
 
 .image_blend_div:hover .overlay {
-  background-color: rgba(0, 0, 0, 0.6);
-  opacity: 1;
+    background-color: rgba(0, 0, 0, 0.6);
+    opacity: 1;
 }
 
 .text {
-  color: white;
-  font-size: 12px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  text-align: center;
+    /*height: 100%;*/
+    width: 100%;
+    color: white;
+    font-size: 15px;
+    position: absolute;
+    padding: 15px;
+
+    display: flex;
+    justify-content: safe center;
+    /*align-items: safe center;*/
+
+/*    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);*/
+    text-align: center;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.overlay::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+.overlay {
+    -ms-overflow-style: none;
 }
