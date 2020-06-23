@@ -156,4 +156,4 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-THUMBNAIL_ENGINE = 'MainApp.thumbnail_engine.Engine'
+# THUMBNAIL_ENGINE = 'MainApp.thumbnail_engine.Engine'
