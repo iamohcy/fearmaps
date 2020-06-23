@@ -155,3 +155,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'www', 'media/')
 MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+THUMBNAIL_ENGINE = 'MainApp.thumbnail_engine.Engine'

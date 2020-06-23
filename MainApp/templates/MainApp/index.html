@@ -18,20 +18,20 @@
     {% for fear_item in fear_items %}
         <div class="image_blend_div">
             <div class="image2">
-                {% thumbnail fear_item.image_2 "500x500" crop="center" as im %}
+                {% thumbnail fear_item.image_2 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
                     <img src="{{ im.url }}" class="fear-image""/>
                 {% endthumbnail %}
             </div>
             <div class="blended_image">
-                {% thumbnail fear_item.image_1 "500x500" crop="center" as im %}
+                {% thumbnail fear_item.image_1 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
                     <img src="{{ im.url }}" class="fear-image""/>
                 {% endthumbnail %}
-                {% thumbnail fear_item.image_2 "500x500" crop="center" as im %}
+                {% thumbnail fear_item.image_2 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
                     <img src="{{ im.url }}" class="fear-image""/>
                 {% endthumbnail %}
             </div>
             <div class="image1">
-                {% thumbnail fear_item.image_1 "500x500" crop="center" as im %}
+                {% thumbnail fear_item.image_1 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
                     <img src="{{ im.url }}" class="fear-image""/>
                 {% endthumbnail %}
             </div>

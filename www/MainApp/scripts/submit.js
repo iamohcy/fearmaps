@@ -137,7 +137,8 @@ $(function() {
                         // Get the canvas with image data from Cropper.js
                         var canvas = myDropZone.cropper.getCroppedCanvas({
                             width: 2000,
-                            height: 2000
+                            height: 2000,
+                            fillColor:'#ffffff',
                         });
 
                         // Turn the canvas into a Blob (file object without a name)
@@ -166,7 +167,7 @@ $(function() {
                                 }
                             );
 
-                        });
+                        }, 'image/jpeg');
 
                         // Remove the editor from view
                         editor.parentNode.removeChild(editor);
