@@ -14,7 +14,8 @@ class Tag(models.Model):
 
 class FearItem(models.Model):
     def image_wrapper1(instance, filename):
-        ext = filename.split('.')[-1]
+        # ext = filename.split('.')[-1]
+        ext = "jpg"
         # get filename
         if instance.pk:
             filename = '{}_{}_1.{}'.format(datetime.today().strftime('%Y%m%d'), instance.pk, ext)
@@ -22,7 +23,8 @@ class FearItem(models.Model):
         return os.path.join('image_files/', filename)
 
     def image_wrapper2(instance, filename):
-        ext = filename.split('.')[-1]
+        # ext = filename.split('.')[-1]
+        ext = "jpg"
         # get filename
         if instance.pk:
             filename = '{}_{}_2.{}'.format(datetime.today().strftime('%Y%m%d'), instance.pk, ext)

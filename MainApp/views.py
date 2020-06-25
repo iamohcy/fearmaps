@@ -44,6 +44,10 @@ def submit(request):
     context = {'form':SubmissionForm()}
     return render(request, 'MainApp/submit.html', context)
 
+def submit_one(request):
+    context = {'form':SubmissionForm()}
+    return render(request, 'MainApp/submit_one.html', context)
+
 def submit_workshop(request):
     context = {'form':SubmissionForm()}
     return render(request, 'MainApp/submit_short.html', context)
