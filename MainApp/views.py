@@ -7,8 +7,42 @@ from .models import FearItem
 
 from django.contrib.auth.decorators import user_passes_test
 
+import json
+from django.core import serializers
+
+from django.views.decorators.http import require_http_methods
+
+from sorl.thumbnail import get_thumbnail
+
+
+@require_http_methods(["GET"])
+def fear_items(request):
+    fearItems = FearItem.objects.exclude(valid=False).order_by("-date_created")
+    for fearItem in fearItems:
+        fearItem.tb1 = fearItem.image_1_thumb
+        # print(fearItem.image_2_tb)
+        # if (not fearItem.image_1_tb):
+        if (fearItem.image_1):
+            fearItem.image_1_tb = get_thumbnail(fearItem.image_1, '600x600', crop='center').name
+            fearItem.save()
+
+        if (fearItem.image_2):
+            fearItem.image_2_tb = get_thumbnail(fearItem.image_2, '600x600', crop='center').name
+            fearItem.save()
+
+    data = serializers.serialize('json', fearItems)
+    return JsonResponse(json.loads(data), safe=False)
+
+def viz1(request):
+    context = {}
+    return render(request, 'MainApp/viz1.html', context)
+
 def index(request):
     # return HttpResponse("Hello, the visualization for this artwork is still under development. Go to <a href='/submit'>this page</a> to submit an entry!")
+    # filtered_fear_items = FearItem.objects.exclude(valid=False).order_by("-date_created")
+    # context = {"fear_items": filtered_fear_items}
+    # return render(request, 'MainApp/index.html', context)
+
     filtered_fear_items = FearItem.objects.exclude(valid=False).order_by("-date_created")
     context = {"fear_items": filtered_fear_items}
     return render(request, 'MainApp/index.html', context)

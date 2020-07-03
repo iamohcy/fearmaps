@@ -4,6 +4,7 @@ from django.db import models
 from sorl.thumbnail import ImageField
 from django_countries.fields import CountryField
 from datetime import datetime
+from sorl.thumbnail import get_thumbnail
 
 # Create your models here.
 class Tag(models.Model):
@@ -44,8 +45,24 @@ class FearItem(models.Model):
 
     image_1 = models.ImageField(upload_to=image_wrapper1)
     image_2 = models.ImageField(upload_to=image_wrapper2)
+
+    image_1_tb = models.ImageField(null=True, blank=False)
+    image_2_tb = models.ImageField(null=True, blank=False)
+
     valid = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def image_1_thumb(self):
+        if self.image_1:
+            return get_thumbnail(self.image_1, '600x600', crop='center')
+        return None
+
+    @property
+    def image_2_thumb(self):
+        if self.image_2:
+            return get_thumbnail(self.image_2, '600x600', crop='center')
+        return None
 
 # class FearImage(models.Model):
 #     def image_wrapper(instance, filename):
