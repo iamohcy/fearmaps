@@ -34,7 +34,7 @@ $(function() {
         ]
 
         var replacementIndex = 0;
-        var DURATION = 10;
+        var DURATION = 5;
         var tl = gsap.timeline({repeat: -1, repeatDelay: 0, onRepeat:function(){
             // console.log(allFearItems.length, previousFearItems.length);
         }});
@@ -54,10 +54,10 @@ $(function() {
                     }
 
                     var newFearItem = getRandomItem(allFearItems);
-                    previousFearItems.push(fearItem);
+                    previousFearItems.push(newFearItem);
                     blendedFearItems[replacementIndex] = newFearItem;
                     $('.image-'+replacementIndex).attr('src',"/media/" + newFearItem.fields.image_1_tb);
-                    $("#image-" + i + "-text").html(blendedFearItems[i].fields.fear_text);
+                    $("#image-" + i + "-text").html(newFearItem.fields.fear_text);
 
                     replacementIndex = (replacementIndex + 1) % MAX_NUM_SAMPLES;
                 } )
