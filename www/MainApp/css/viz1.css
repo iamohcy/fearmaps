@@ -3,12 +3,20 @@
 }
 */
 
+#viz-container {
+    padding-top: 30px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+#viz-description-div {
+}
+
 #fear-image-div {
-    padding-top: 50px;
-    width: 600px;
+    width: 100%
     margin: auto;
     height: 100%;
-    max-width: 100%;
+    max-width: 650px;
 }
 
 .fear-image {
@@ -26,7 +34,7 @@
 }
 
 .sub-image {
-    width: 33%;
+    width: 33.33%;
 }
 
 #blended-image-div {
@@ -37,13 +45,12 @@
 
 #sub-images-div {
     margin-top: 20px;
-    width: 600px;
-    max-width: 100%;
+    max-width: 650px;
 }
 
 .sub-image-div {
     float: left;
-    width: 33%;
+    width: 33.33%;
     height: auto;
     position: relative;
 }
