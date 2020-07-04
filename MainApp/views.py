@@ -33,9 +33,26 @@ def fear_items(request):
     data = serializers.serialize('json', fearItems)
     return JsonResponse(json.loads(data), safe=False)
 
+def project_intro(request):
+    context = {}
+    return render(request, 'MainApp/project_intro.html', context)
+
+def about(request):
+    context = {}
+    return render(request, 'MainApp/about.html', context)
+
+def about_workshop(request):
+    context = {}
+    return render(request, 'MainApp/about_workshop.html', context)
+
 def viz1(request):
     context = {}
     return render(request, 'MainApp/viz1.html', context)
+
+def viz2(request):
+    filtered_fear_items = FearItem.objects.exclude(valid=False).order_by("-date_created")
+    context = {"fear_items": filtered_fear_items}
+    return render(request, 'MainApp/viz2.html', context)
 
 def index(request):
     # return HttpResponse("Hello, the visualization for this artwork is still under development. Go to <a href='/submit'>this page</a> to submit an entry!")
@@ -46,12 +63,6 @@ def index(request):
     filtered_fear_items = FearItem.objects.exclude(valid=False).order_by("-date_created")
     context = {"fear_items": filtered_fear_items}
     return render(request, 'MainApp/index.html', context)
-
-
-def submissions(request):
-    filtered_fear_items = FearItem.objects.exclude(valid=False).order_by("-date_created")
-    context = {"fear_items": filtered_fear_items}
-    return render(request, 'MainApp/submissions.html', context)
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/admin')
 def viz(request):

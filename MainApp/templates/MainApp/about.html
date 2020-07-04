@@ -1,0 +1,37 @@
+{% extends "base_navbar.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<!-- ABOUT US -->
+<div class="container" style="max-width: 700px; padding-top: 50px">
+    <h5>About Us</h5>
+    <div class="" style="padding: 20px">
+        <div class="mb-2 float-left" style="width: 100px;">
+            <img src="{% static "MainApp/images/xinwei.jpg" %}" class="rounded-circle""/>
+        </div>
+        <div class="" style="margin-left: 120px;">
+            <p>
+                My name is Xinwei. I live and work in Singapore. I make collaborative artworks with communities to explore ideas around memory, time and impermanence. I have lots of questions, and making art together with people is how to find answers.
+            </p>
+        </div>
+    </div>
+    <div class="" style="padding: 20px">
+        <div class="mb-2 float-left" style="width: 100px;">
+            <img src="{% static "MainApp/images/chin_yang.jpg" %}" class="rounded-circle""/>
+        </div>
+        <div class="" style="margin-left: 120px;">
+            <p>
+                I'm Chin Yang, a Software Engineer by day and artist/photographer/writer by night, midnight, and sometimes right before dawn. I love exploring the intersection between Art and Technology, and spend most of my weekends playing board games, creating works that fuse my various interests, and being a Tech peon for my friends and family. I am also the web developer for this project so please contact me if this sentence is not visible to you.
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block custom_js %}
+    <!-- Main.js -->
+{% endblock %}
+

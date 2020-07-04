@@ -6,6 +6,10 @@ main {
     height: 100%;
 }
 
+img {
+    width: 100%;
+}
+
 .vertical-center {
     min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
     min-height: 100vh; /* These two lines are counted as one :-)       */
@@ -35,12 +39,49 @@ main {
     display: flex;
 }
 
+html {
+   font-size: 1rem;
+}
+h1 {
+  font-size: 1.2rem;
+}
+h2 {
+  font-size: 1.1rem;
+}
 
-/*@font-face {
-    font-family: 'Slimbots Italic';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Slimbots Italic'), url('Slimbots Italic.woff') format('woff');
+@media (min-width: 768px) {
+  html {
+    font-size: 1.05rem;
+  }
+  h1 {
+      font-size: 1.3rem;
+  }
+  h2 {
+      font-size: 1.2rem;
+  }
+}
+
+/*@media (min-width: 991px) {
+    html {
+    font-size: 1.2rem;
+  }
+  h1 {
+      font-size: 1.5rem;
+  }
+  h2 {
+      font-size: 1.4rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  html {
+    font-size: 1.2rem;
+  }
+  h1 {
+      font-size: 1.7rem;
+  }
+  h2 {
+      font-size: 1.6rem;
+  }
 }
 */
-

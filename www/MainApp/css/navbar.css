@@ -1,0 +1,19 @@
+body {
+}
+
+/* NAVBAR */
+
+/*.app-navbar {
+    padding-bottom: 0px;
+    padding-left: 10px;
+    padding-top: 3px;
+    padding:right: 10px;
+}
+*/
+.nav-link {
+    cursor: pointer;
+}
+
+main {
+    padding-top: 50px;
+}

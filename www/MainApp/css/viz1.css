@@ -8,6 +8,7 @@
     width: 600px;
     margin: auto;
     height: 100%;
+    max-width: 100%;
 }
 
 .fear-image {
@@ -20,6 +21,10 @@
     mix-blend-mode: difference;
 }
 
+.blended:last-child {
+    position: relative;
+}
+
 .sub-image {
     width: 33%;
 }
@@ -27,12 +32,13 @@
 #blended-image-div {
     position: relative;
     background-color: black;
-    height: 600px;
+    height: auto;
 }
 
 #sub-images-div {
     margin-top: 20px;
     width: 600px;
+    max-width: 100%;
 }
 
 .sub-image-div {

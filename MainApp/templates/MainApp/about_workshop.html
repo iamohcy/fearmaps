@@ -1,0 +1,41 @@
+{% extends "base_navbar.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<!-- ABOUT WORKSHOP -->
+<div class="container pt-3" style="max-width: 900px">
+    <div class="row" style="padding: 20px">
+        <div class="col-sm-5 mb-2">
+            <img src="{% static "MainApp/images/workshop_image.jpg" %}"/>
+        </div>
+        <div class="col-sm-7">
+            <h5>Mapping Fear Workshop</h5>
+            <p>
+                During these 2 hour sessions, we will gather in small groups to write, draw and share about fear. Warm up exercises will be conducted to help loosen your drawing muscles, and get you ready for the actual experience.
+            </p>
+            <p>
+                What we make during this workshop will become part of the Mapping Fear project, and help others understand and visualize their own fears. Open to ages 14 and up. Workshops are free of charge, but have limited availability.
+            </p>
+            <p>
+                Workshops will be hosted online. Email <a href="mailto: community.fearmaps@gmail.com?subject=Fear Maps Workshop Registration" target="_blank">community.fearmaps@gmail.com</a> to register for an upcoming session:
+                <br>
+                <br>
+                Wed 15 July, 8pm – 10pm
+                <br>
+                Sat 18 July, 10am – 12noon
+            </p>
+            <p>
+                Alternatively, you can do our guided activity <a href="{% url 'submit' %}">here</a> at your own time.
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block custom_js %}
+    <!-- Main.js -->
+{% endblock %}
+
