@@ -14,15 +14,23 @@ $(function() {
         var allFearItems = data;
         var previousFearItems = [];
         var blendedFearItems = [];
+
         while ((allFearItems.length > 0) && (blendedFearItems.length < MAX_NUM_SAMPLES)) {
             var fearItem = getRandomItem(allFearItems)
             blendedFearItems.push(fearItem);
             previousFearItems.push(fearItem);
         }
 
+
         for (var i = 0; i < blendedFearItems.length; i++) {
             console.log(blendedFearItems[i]);
-            $('.image-'+i).attr('src',"/media/" + blendedFearItems[i].fields.image_1_tb);
+            var fearItemData = blendedFearItems[i].fields;
+            var image_tb = fearItemData.image_1_tb;
+            if (fearItemData.image_2_tb.length > 0) {
+                image_tb = (Math.random() >= 0.5) ? fearItemData.image_1_tb : fearItemData.image_2_tb;
+            }
+
+            $('.image-'+i).attr('src',"/media/" + image_tb);
             $("#image-" + i + "-text").html(blendedFearItems[i].fields.fear_text);
         }
 
@@ -35,20 +43,16 @@ $(function() {
 
         var replacementIndex = -1;
         var DURATION = 5;
-        // var DURATION = 1;
+        // var DURATION = 0.5;
         var tl = gsap.timeline({repeat: -1, repeatDelay: 0, onRepeat:function(){
-            console.log("REPEAT!");
             replacementIndex = (replacementIndex + 1) % MAX_NUM_SAMPLES;
 
             // console.log(allFearItems.length, previousFearItems.length);
         }});
 
         var checkForReplace = function(imageIndex,opacity) {
-
-            console.log(imageIndex, opacity, replacementIndex);
             // Replace the image only when it's opacity has reached 0
             if (imageIndex === replacementIndex && opacity <= 0) {
-                console.log("CHANGE! " + replacementIndex);
                 // We've emptied the array, replace it back with the old popped items
                 if (allFearItems.length == 0) {
                     allFearItems = previousFearItems;
@@ -58,7 +62,14 @@ $(function() {
                 var newFearItem = getRandomItem(allFearItems);
                 previousFearItems.push(newFearItem);
                 blendedFearItems[replacementIndex] = newFearItem;
-                $('.image-'+replacementIndex).attr('src',"/media/" + newFearItem.fields.image_1_tb);
+
+                var fearItemData = newFearItem.fields;
+                var image_tb = fearItemData.image_1_tb;
+                if (fearItemData.image_2_tb.length > 0) {
+                    image_tb = (Math.random() >= 0.5) ? fearItemData.image_1_tb : fearItemData.image_2_tb;
+                }
+
+                $('.image-'+replacementIndex).attr('src',"/media/" + image_tb);
                 $("#image-" + replacementIndex + "-text").html(newFearItem.fields.fear_text);
             }
 
