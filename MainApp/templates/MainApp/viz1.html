@@ -10,8 +10,8 @@
 
 {% block content %}
 <!-- COLLECTION AREA -->
-<div class="" id="viz-container">
-    <div class="mb-3">
+<div class="row" id="viz-container">
+    <div class="col-md-8 mb-3">
         <div id="fear-image-div">
             <div id="blended-image-div">
                 <img id="blend-image-0" src="" class="fear-image blended image-0"/>
@@ -38,15 +38,15 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-4" id="viz-description-div">
-                <p>
-                    This shifting image is a morphing composite of fear drawings submitted by three different individuals. Three submissions are randomly selected from the pool of submissions, and superimposed over one another. As time goes by, these images are gradually replaced by drawings done by new individuals.
-                </p>
-                <p>
-                    The three composite images making up the animated composite of fears are shown directly below it. Hover over each image to view the corresponding description of the fears that lie behind each drawing.
-                </p>
-            </div>
         </div>
+    </div>
+    <div class="col-md-4 pr-3" id="viz-description-div">
+        <p>
+            This shifting image is a morphing composite of fear drawings submitted by different participants. Three drawings are randomly selected from the pool of submissions, and superimposed over one another. As time goes by, these images are gradually replaced by drawings done by new participants.
+        </p>
+        <p>
+            The individual images making up the animated composite of fears are shown directly below it. Hover over each image to view the corresponding fears that lie behind each drawing.
+        </p>
     </div>
 </div>
 {% endblock %}

@@ -174,6 +174,15 @@
 
 
 {% block custom_js %}
+
+    <!--  VUE.JS -->
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- production version, optimized for size and speed -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+
     <script src="https://kit.fontawesome.com/802ea9d6d1.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" crossorigin="anonymous"></script>
     <script src="{% static "MainApp/scripts/ext/Math.uuid.js" %}"></script>
