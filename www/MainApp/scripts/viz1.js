@@ -21,7 +21,6 @@ $(function() {
             previousFearItems.push(fearItem);
         }
 
-
         for (var i = 0; i < blendedFearItems.length; i++) {
             console.log(blendedFearItems[i]);
             var fearItemData = blendedFearItems[i].fields;
