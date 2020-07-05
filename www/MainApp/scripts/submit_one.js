@@ -57,7 +57,7 @@ $(function() {
         var maxFiles = 1;
 
         return new Dropzone(id, {
-            url: '/submit_images',
+            url: '/submit_images/',
             autoProcessQueue: false,
             maxFiles: maxFiles,
             maxFilesize: 20,
@@ -420,7 +420,7 @@ $(function() {
                 console.log("Image 1 queue DONE!");
                 $.ajax({
                     type: "POST",
-                    url: "/complete_submission",
+                    url: "/complete_submission/",
                     ContentType: 'application/json',
                     data: {'uuid':self.uuid}, // serializes the form's elements.
                     success: function(data) {

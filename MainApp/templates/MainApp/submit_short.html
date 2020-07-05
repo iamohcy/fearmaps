@@ -55,7 +55,7 @@
 
 
 <div id="upload-form">
-    <form class="consent-form" id="consent-form" action="/submit_consent" enctype="multipart/form-data" method="post">
+    <form class="consent-form" id="consent-form" action="/submit_consent/" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {{ form.uuid }}
 
