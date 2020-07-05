@@ -43,8 +43,8 @@
 }
 
 #consent-form {
-    margin-left: 25px;
-    margin-right: 25px;
+/*    margin-left: 25px;
+    margin-right: 25px;*/
 }
 
 .control-group {
@@ -68,7 +68,7 @@
 body {
     background: #baf0f0;
     margin: 0px;
-    padding: 30px;
+    padding: 30px 15px;
 }
 
 /* for cropper.js */

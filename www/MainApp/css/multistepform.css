@@ -200,3 +200,8 @@ body {
     text-decoration: none;
 }
 
+@media only screen and (max-width: 570px) {
+  #progressbar li {
+    font-size: 0px;
+  }
+}
