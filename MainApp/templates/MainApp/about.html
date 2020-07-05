@@ -2,31 +2,78 @@
 {% load i18n %}
 {% load static %}
 
+{% block custom_css %}
+    <link href="{% static "MainApp/css/ext/socializer.min.css" %}" rel="stylesheet">
+    <link href="{% static "MainApp/css/socializer-custom.css" %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <!-- ABOUT US -->
-<div class="container" style="max-width: 700px; padding-top: 50px">
+<div class="container" style="max-width: 600px; padding-top: 50px">
     <h5>About Us</h5>
-    <div class="" style="padding: 20px">
-        <div class="mb-2 float-left" style="width: 100px;">
-            <img src="{% static "MainApp/images/xinwei.jpg" %}" class="rounded-circle""/>
+    <div class="row" style="padding: 20px">
+        <div class="mb-2 col-sm" style="max-width: 200px; margin-left:auto; margin-right:auto;">
+            <div>
+                <img src="{% static "MainApp/images/xinwei.jpg" %}" class="rounded-circle""/>
+            </div>
+            <div class="socializer a sr-32px sr-squircle sr-opacity sr-icon-white sr-pad"
+                 style="">
+                <span class="sr-facebook">
+                    <a href="https://www.facebook.com/xinweiche.sg" target="_blank" title="Facebook">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                </span>
+                <span class="sr-instagram">
+                    <a href="https://www.instagram.com/xinwei_che/" target="_blank" title="Instagram">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                </span>
+                <span class="sr-shortlink">
+                    <a href="http://www.xinwei-c.com/" target="_blank" title="Instagram">
+                        <i class="fa fa-globe"></i>
+                    </a>
+                </span>
+            </div>
         </div>
-        <div class="" style="margin-left: 120px;">
+
+        <div class="col-sm">
             <p>
-                My name is Xinwei. I live and work in Singapore. I make collaborative artworks with communities to explore ideas around memory, time and impermanence. I have lots of questions, and making art together with people is how to find answers.
+                I’m Xinwei, a visual artist based in Singapore. I make collaborative artworks with communities to explore ideas around memory, time and impermanence. I believe the best way to experience art is to make it, and that artworks are much more interesting when they’re not mounted on museum walls. I have lots of questions, and making art together with people is how I try to find answers.
             </p>
         </div>
     </div>
-    <div class="" style="padding: 20px">
-        <div class="mb-2 float-left" style="width: 100px;">
-            <img src="{% static "MainApp/images/chin_yang.jpg" %}" class="rounded-circle""/>
+    <div class="row" style="padding: 20px">
+        <div class="mb-2 col-sm" style="max-width: 200px; margin-left:auto; margin-right:auto;">
+            <div>
+                <img src="{% static "MainApp/images/chin_yang.jpg" %}" class="rounded-circle""/>
+            </div>
+            <div class="socializer a sr-32px sr-squircle sr-opacity sr-icon-white sr-pad"
+                 style="">
+                <span class="sr-facebook">
+                    <a href="https://www.facebook.com/iamohcy" target="_blank" title="Facebook">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                </span>
+                <span class="sr-instagram">
+                    <a href="https://www.instagram.com/ohcy/" target="_blank" title="Instagram">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                </span>
+                <span class="sr-shortlink">
+                    <a href="http://www.iamohcy.com/" target="_blank" title="Instagram">
+                        <i class="fa fa-globe"></i>
+                    </a>
+                </span>
+            </div>
         </div>
-        <div class="" style="margin-left: 120px;">
+        <div class="col-sm">
             <p>
                 I'm Chin Yang, a Software Engineer by day and artist/photographer/writer by night, midnight, and sometimes right before dawn. I love exploring the intersection between Art and Technology, and spend most of my weekends playing board games, creating works that fuse my various interests, and being a Tech peon for my friends and family. I am also the web developer for this project so please contact me if this sentence is not visible to you.
             </p>
         </div>
     </div>
 </div>
+
 
 {% endblock %}
 
