@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'django_extensions',
 ]
 
-    EMAIL_USE_TLS = True
+EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'dicedicebaby.ohcy@gmail.com' #CLEAN_THIS
 EMAIL_HOST_PASSWORD = 'ddb570158' #CLEAN_THIS
