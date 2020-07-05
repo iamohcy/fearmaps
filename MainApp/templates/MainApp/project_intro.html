@@ -3,33 +3,35 @@
 {% load static %}
 
 {% block content %}
-<!-- COLLECTION AREA -->
-<div class="container pt-3" style="max-width: 900px; height: 100%">
-    <div class="row" style="padding: 20px">
-        <div class="col-sm-5 mb-2">
-            <img src="{% static "MainApp/images/project_intro_image.jpg" %}"/>
-        </div>
-        <div class="col-sm-7">
-            <h5>Why Map Fear?</h5>
-            <p>
-                Making art individually and collectively gives us a way to think about and express challenging emotions. In societies that prioritize efficiency, contemplating one’s fears is often considered futile or unproductive. But fear is one of humanity's oldest, most primal emotions. It helps us grow. It helps us survive.
-            </p>
-            <p>
-                In sharing time and space with the many people who have added drawings and writings to this project, we have discovered that fear can reveal what we truly desire. And if we are able to really look at it, fear can help show us how to go forward in difficult times.
-            </p>
-            <p>
-                In this season of uncertainty, we hope this project can provide a space for participants to observe their fear through the lenses of drawing and writing. All entries are anonymous, and no prior experience in art is required.
-            </p>
-            <p>
-                Join our guided activity (30 minutes) <a href="{% url 'submit' %}">here</a> or sign up for an upcoming workshop <a href="{% url 'about_workshop' %}">here.</a>
-            </p>
+<div class="main-container">
+    <!-- COLLECTION AREA -->
+    <div class="container pt-3" style="max-width: 900px; height: 100%">
+        <div class="row" style="padding: 20px">
+            <div class="col-sm-5 mb-3">
+                <img src="{% static "MainApp/images/project_intro_image.jpg" %}"/>
+            </div>
+            <div class="col-sm-7">
+                <h5>Why Map Fear?</h5>
+                <p>
+                    Making art individually and collectively gives us a way to think about and express challenging emotions. In societies that prioritize efficiency, contemplating one’s fears is often considered futile or unproductive. But fear is one of humanity's oldest, most primal emotions. It helps us grow. It helps us survive.
+                </p>
+                <p>
+                    In sharing time and space with the many people who have added drawings and writings to this project, we have discovered that fear can reveal what we truly desire. And if we are able to really look at it, fear can help show us how to go forward in difficult times.
+                </p>
+                <p>
+                    In this season of uncertainty, we hope this project can provide a space for participants to observe their fear through the lenses of drawing and writing. All entries are anonymous, and no prior experience in art is required.
+                </p>
+                <p>
+                    Join our guided activity (30 minutes) <a href="{% url 'submit' %}">here</a> or sign up for an upcoming workshop <a href="{% url 'about_workshop' %}">here.</a>
+                </p>
+            </div>
         </div>
     </div>
+
     <div class="text-center footer bg-light">
         Supported by the National Arts Council Presentation & Participation Grant
     </div>
 </div>
-
 
 {% endblock %}
 

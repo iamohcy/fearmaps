@@ -5,14 +5,23 @@ html, body {
     overflow: auto;
 }
 
+.main-container {
+    height: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    overflow: auto;
+}
+
 .footer {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    height: 50px;
-    line-height: 50px;
+    width: 100vw;
+    height: 60px;
     font-size: 1.0em;
+    padding: 5px 15px;
+    margin-top: auto;
 }
 
 main {
