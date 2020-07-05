@@ -17,12 +17,12 @@
 
     <div class="row fear-item-row mt-3">
         <div class="col-2 fear-image-div">
-            {% thumbnail fear_item.image_1 "500x500" crop="center" as im %}
+            {% thumbnail fear_item.image_1 "200x200" crop="center" as im %}
                 <img src="{{ im.url }}" class="fear-image rounded float-left"">
             {% endthumbnail %}
         </div>
         <div class="col-2 fear-image-div">
-            {% thumbnail fear_item.image_2 "500x500" crop="center" as im %}
+            {% thumbnail fear_item.image_2 "200x200" crop="center" as im %}
                 <img src="{{ im.url }}" class="fear-image rounded float-left"">
             {% endthumbnail %}
         </div>
