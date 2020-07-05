@@ -4,6 +4,7 @@
 
 .socializer {
     width: fit-content;
+    width: webkit-fit-content;
     margin-left: auto;
     margin-right: auto;
     display: block;
