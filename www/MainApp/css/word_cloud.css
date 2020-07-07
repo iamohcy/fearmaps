@@ -1,0 +1,63 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600);
+body {font-family: "Source Code Pro", Consolas, monaco, monospace; line-height: 160%; font-size: 16px;  margin: 0; }
+
+path.link {
+    fill: none;
+    stroke-width: 2px;
+}
+
+.node:not(:hover) .nodetext {
+display: none;
+}
+
+h1 { font-size: 36px; margin: 10px 0; text-transform: uppercase; font-weight: normal;}
+h2, h3 { font-size: 18px; margin: 5px 0 ; font-weight: normal;}
+header {padding: 20px; position: absolute; top: 0; left: 0;}
+a:link { color: #EE3124; text-decoration: none;}
+a:visited { color: #EE3124; }
+a:hover { color: #A4CD39; text-decoration: underline;}
+a:active { color: #EE3124; }
+
+#cloud-div {
+    height: 100%;
+}
+
+#fear-item-div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#description-div {
+    padding-top: 30px;
+}
+
+#fear-item-div img {
+    height: auto;
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 991px) {
+    #fear-item-div img {
+        height: 100% !important;
+        width: auto !important;
+    }
+
+    #cloud-div {
+        height: 70% !important;
+    }
+
+    #description-div {
+        padding-top: 10px !important;
+        height: 30% !important;
+    }
+
+    #fear-item-div {
+        flex-direction: row !important;
+    }
+}
