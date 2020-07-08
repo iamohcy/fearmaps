@@ -20,27 +20,8 @@
     max-width: 650px;
 }
 
-.fear-image {
-    height: auto;
-}
-
-.blended {
-    position: absolute;
-    mix-blend-mode: difference;
-}
-
-.blended:last-child {
-    position: relative;
-}
-
 .sub-image {
     width: 33.33%;
-}
-
-#blended-image-div {
-    position: relative;
-    background-color: black;
-    height: auto;
 }
 
 #sub-images-div {
@@ -104,4 +85,9 @@
 /* Hide scrollbar for IE and Edge */
 .overlay {
     -ms-overflow-style: none;
+}
+
+
+.modal-backdrop {
+   background-color: transparent;
 }

@@ -21,16 +21,26 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav mr-auto ">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'project_intro' %}">Project Intro</a>
+                    <a class="nav-link" href="{% url 'viz1' %}">Project Intro</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Explore Fears
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="nav-link" href="{% url 'viz2' %}">All Fears</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="nav-link" href="{% url 'viz1' %}">Transmutation</a>
+                        <a class="nav-link" href="{% url 'viz1_gallery' %}">Transmutation Gallery</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="nav-link" href="{% url 'word_cloud' %}">Tangled Web</a>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'submit' %}">Guided Activity</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'about_workshop' %}">Workshop</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'viz1' %}">Explore Fears</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'about' %}">About Us</a>

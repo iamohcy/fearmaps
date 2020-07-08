@@ -6,27 +6,38 @@
 
 {% block custom_css %}
     <!-- Main.css -->
-    <link href="{% static "MainApp/css/submissions.css" %}" rel="stylesheet">
+    <link href="{% static "MainApp/css/viz2.css" %}" rel="stylesheet">
 {% endblock %}
-
 
 {% block content %}
 <!-- COLLECTION AREA -->
 <div id="fear-image-div" class="grid">
-    <div class="grid-sizer"></div>
+    <!-- <div class="grid-sizer"></div> -->
+
     {% for fear_item in fear_items %}
-        {% thumbnail fear_item.image_1 "200x200" crop="center" as im %}
-            <div class="grid-item">
-                <img src="{{ im.url }}" class="fear-image""/>
+        <div class="image_blend_div">
+            <div class="image2">
+                {% thumbnail fear_item.image_2 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
+                    <img src="{{ im.url }}" class="fear-image""/>
+                {% endthumbnail %}
             </div>
-            <!-- <img class="fear-image" src="{{fear_image.image_file.url}}" class="rounded float-left" alt="..."> -->
-        {% endthumbnail %}
-        {% thumbnail fear_item.image_2 "200x200" crop="center" as im %}
-            <div class="grid-item">
-                <img src="{{ im.url }}" class="fear-image""/>
+            <div class="blended_image">
+                {% thumbnail fear_item.image_1 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
+                    <img src="{{ im.url }}" class="fear-image""/>
+                {% endthumbnail %}
+                {% thumbnail fear_item.image_2 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
+                    <img src="{{ im.url }}" class="fear-image""/>
+                {% endthumbnail %}
             </div>
-            <!-- <img class="fear-image" src="{{fear_image.image_file.url}}" class="rounded float-left" alt="..."> -->
-        {% endthumbnail %}
+            <div class="image1">
+                {% thumbnail fear_item.image_1 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
+                    <img src="{{ im.url }}" class="fear-image""/>
+                {% endthumbnail %}
+            </div>
+            <div class="overlay">
+                <div class="text">{{fear_item.fear_text|linebreaks}}</div>
+            </div>
+        </div>
     {% endfor %}
 </div>
 
@@ -36,7 +47,7 @@
 {% block custom_js %}
     <!-- Main.js -->
     <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
-    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-    <script src="{% static "MainApp/scripts/submissions.js" %}" %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.3/gsap.min.js"></script>
+    <script src="{% static "MainApp/scripts/viz2.js" %}" %}"></script>
 {% endblock %}
 

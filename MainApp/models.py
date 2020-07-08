@@ -64,6 +64,19 @@ class FearItem(models.Model):
             return get_thumbnail(self.image_2, '600x600', crop='center')
         return None
 
+class FearComposite(models.Model):
+    fear_item_0 = models.ForeignKey(FearItem, on_delete=models.CASCADE, related_name='fear_composite_1', null=True)
+    fear_item_1 = models.ForeignKey(FearItem, on_delete=models.CASCADE, related_name='fear_composite_2', null=True)
+    fear_item_2 = models.ForeignKey(FearItem, on_delete=models.CASCADE, related_name='fear_composite_3', null=True)
+
+    image_idx_0 = models.IntegerField(default=0)
+    image_idx_1 = models.IntegerField(default=0)
+    image_idx_2 = models.IntegerField(default=0)
+
+    opacity_0 = models.FloatField(default=0.0)
+    opacity_1 = models.FloatField(default=0.0)
+    opacity_2 = models.FloatField(default=0.0)
+
 # class FearImage(models.Model):
 #     def image_wrapper(instance, filename):
 #         ext = filename.split('.')[-1]

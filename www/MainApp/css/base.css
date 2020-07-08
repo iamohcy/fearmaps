@@ -64,7 +64,7 @@ img {
     display: flex;
 }
 
-html {
+/*html {
    font-size: 1rem;
 }
 h1 {
@@ -84,7 +84,7 @@ h2 {
   h2 {
       font-size: 1.2rem;
   }
-}
+}*/
 
 /*@media (min-width: 991px) {
     html {
@@ -110,3 +110,25 @@ h2 {
   }
 }
 */
+
+
+
+/*BLENDED IMAGES*/
+.fear-image {
+    height: auto;
+}
+
+.blended {
+    position: absolute;
+    mix-blend-mode: difference;
+}
+
+.blended:last-child {
+    position: relative;
+}
+
+.blended-image-container {
+    position: relative;
+    background-color: black;
+    height: auto;
+}

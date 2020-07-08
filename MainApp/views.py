@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse, JsonResponse
 from .forms import SubmissionForm, UploadFileForm
-from .models import FearItem
+from .models import FearItem, FearComposite
 
 from django.contrib.auth.decorators import user_passes_test
 
@@ -66,6 +66,56 @@ def get_word_cloud(request):
 def word_cloud(request):
     return render(request, 'MainApp/word_cloud.html')
 
+@require_http_methods(["POST"])
+def add_composite(request):
+    # data = request.POST.get('data')
+    # image0 = request.POST.get('0')
+    # image1 = request.POST.get('1')
+    # image2 = request.POST.get('2')
+
+    MAX_COMPOSITES = 100
+
+    # Limit the max number of entries to 100
+    numToDelete = FearComposite.objects.all().count() - MAX_COMPOSITES + 1
+    if (numToDelete > 0):
+        for i in range(numToDelete):
+            print(FearComposite.objects.all().count())
+            FearComposite.objects.first().delete()
+
+    try:
+        pk0 = request.POST.get('pk-0')
+        opacity0 = request.POST.get('opacity-0')
+        thumb0 = request.POST.get('imageIndex-0')
+        fear_item0 = FearItem.objects.get(pk=pk0)
+
+        pk1 = request.POST.get('pk-1')
+        opacity1 = request.POST.get('opacity-1')
+        thumb1 = request.POST.get('imageIndex-1')
+        fear_item1 = FearItem.objects.get(pk=pk1)
+
+        pk2 = request.POST.get('pk-2')
+        opacity2 = request.POST.get('opacity-2')
+        thumb2 = request.POST.get('imageIndex-2')
+        fear_item2 = FearItem.objects.get(pk=pk2)
+
+        FearComposite.objects.update_or_create(fear_item_0=fear_item0, opacity_0=opacity0,fear_item_1=fear_item1, opacity_1=opacity1,fear_item_2=fear_item2, opacity_2=opacity2, image_idx_0 = thumb0, image_idx_1 = thumb1, image_idx_2 = thumb2)
+
+        # print(json.loads(request.POST[0]))
+        # defaults = {
+        #     "send_email": send_email,
+        #     "email": email,
+        #     "gender": gender,
+        #     "age": age,
+        #     "country": country,
+        #     "fear_text": fear_text,
+        #     "fear_colors_text": fear_colors_text,
+        # }
+        # fearItem = FearItem.objects.update_or_create(item_id = uuid, defaults=defaults)
+        return JsonResponse({"success": True, "count": FearComposite.objects.all().count()})
+    except Exception as e:
+        return JsonResponse({"success": False, "error":str(e)})
+
+
 @require_http_methods(["GET"])
 def fear_items(request):
     fearItems = FearItem.objects.exclude(valid=False).order_by("-date_created")
@@ -100,6 +150,10 @@ def about_workshop(request):
 def viz1(request):
     context = {}
     return render(request, 'MainApp/viz1.html', context)
+
+def viz1_gallery(request):
+    context = {"fear_composites": FearComposite.objects.all()}
+    return render(request, 'MainApp/viz1_gallery.html', context)
 
 def viz2(request):
     filtered_fear_items = FearItem.objects.exclude(valid=False).order_by("-date_created")

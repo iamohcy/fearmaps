@@ -1,0 +1,61 @@
+{% extends "base_navbar.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load thumbnail %}
+
+{% block custom_css %}
+    <!-- Main.css -->
+    <link href="{% static "MainApp/css/viz1_gallery.css" %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+<!-- COLLECTION AREA -->
+<div id="fear-composite-div" class="grid">
+    <div class="grid-sizer"></div>
+    {% for fear_composite in fear_composites %}
+        <div id="blended-image-div" class="grid-item">
+            {% if fear_composite.image_idx_0 == 0 %}
+                {% thumbnail fear_composite.fear_item_0.image_1 "200x200" crop="center" as im %}
+                    <img id="blend-image-0" style="opacity:{{fear_composite.opacity_0}};" src="{{ im.url }}" class="fear-image blended image-0"/>
+                {% endthumbnail %}
+            {% else %}
+                {% thumbnail fear_composite.fear_item_0.image_2 "200x200" crop="center" as im %}
+                    <img id="blend-image-0" style="opacity:{{fear_composite.opacity_0}};" src="{{ im.url }}" class="fear-image blended image-0"/>
+                {% endthumbnail %}
+            {% endif %}
+
+            {% if fear_composite.image_idx_1 == 0 %}
+                {% thumbnail fear_composite.fear_item_1.image_1 "200x200" crop="center" as im %}
+                    <img id="blend-image-1" style="opacity:{{fear_composite.opacity_1}};" src="{{ im.url }}" class="fear-image blended image-1"/>
+                {% endthumbnail %}
+            {% else %}
+                {% thumbnail fear_composite.fear_item_1.image_2 "200x200" crop="center" as im %}
+                    <img id="blend-image-1" style="opacity:{{fear_composite.opacity_1}};" src="{{ im.url }}" class="fear-image blended image-1"/>
+                {% endthumbnail %}
+            {% endif %}
+
+            {% if fear_composite.image_idx_2 == 0 %}
+                {% thumbnail fear_composite.fear_item_2.image_1 "200x200" crop="center" as im %}
+                    <img id="blend-image-2" style="opacity:{{fear_composite.opacity_2}};" src="{{ im.url }}" class="fear-image blended image-2"/>
+                {% endthumbnail %}
+            {% else %}
+                {% thumbnail fear_composite.fear_item_2.image_2 "200x200" crop="center" as im %}
+                    <img id="blend-image-2" style="opacity:{{fear_composite.opacity_2}};" src="{{ im.url }}" class="fear-image blended image-2"/>
+                {% endthumbnail %}
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+
+{% block custom_js %}
+    <!-- Main.js -->
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="{% static "MainApp/scripts/viz1_gallery.js" %}" %}"></script>
+{% endblock %}
+
