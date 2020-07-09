@@ -15,7 +15,7 @@
 <div id="fear-composite-div" class="grid">
     <div class="grid-sizer"></div>
     {% for fear_composite in fear_composites %}
-        <div id="blended-image-div" class="grid-item">
+        <div id="blended-image-div" class="grid-item blended-image-container">
             {% if fear_composite.image_idx_0 == 0 %}
                 {% thumbnail fear_composite.fear_item_0.image_1 "600x600" crop="center" as im %}
                     <img id="blend-image-0" style="opacity:{{fear_composite.opacity_0}};" src="{{ im.url }}" class="fear-image blended image-0"/>
