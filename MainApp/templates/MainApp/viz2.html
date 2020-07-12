@@ -10,39 +10,19 @@
 {% endblock %}
 
 {% block content %}
-<div class="row" style="height: 100%;">
-    <!-- COLLECTION AREA -->
-    <!-- <div id="fear-image-div" class="grid"> -->
-        <!-- <div class="grid-sizer"></div> -->
-    <div id="fear-collection-div" class="col-xl-9 col-lg-9 col-md-8 col-sm-6 order-2 order-md-1 order-sm-1">
-        {% for fear_item in fear_items %}
-            <div class="image_blend_div grid-item" id="{{fear_item.pk}}">
-                <div class="image2">
-                    {% thumbnail fear_item.image_2 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
-                        <img src="{{ im.url }}" class="fear-image""/>
-                    {% endthumbnail %}
-                </div>
-                <div class="blended_image">
-                    {% thumbnail fear_item.image_1 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
-                        <img src="{{ im.url }}" class="fear-image""/>
-                    {% endthumbnail %}
-                    {% thumbnail fear_item.image_2 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
-                        <img src="{{ im.url }}" class="fear-image""/>
-                    {% endthumbnail %}
-                </div>
-                <div class="image1">
-                    {% thumbnail fear_item.image_1 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
-                        <img src="{{ im.url }}" class="fear-image""/>
-                    {% endthumbnail %}
-                </div>
-                <div class="overlay">
-                    <div class="text">{{fear_item.fear_text|linebreaks}}</div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
 
-    <div id="fear-description-div" class="col-xl-3 col-lg-3 col-md-4 col-sm-6 order-1 order-md-2 order-sm-2">
+<!-- Modal -->
+<div class="modal fade" id="fear-description-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+<!--       <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Fear Entry</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <div class="modal-body" id="fear-description-div">
+
         <div id="fear-item-div" style="width: 100%;" v-if="fear_item">
             <div id="description-image-div">
                 <img class="mt-0" v-bind:src="'/media/' + fear_item.image_1_tb" alt="Card image cap">
@@ -51,11 +31,58 @@
             <div id="text-description-div" class="p-3 mt-1" style="text-align: center;">
                 <template v-for="line in fear_item.fear_text.split('\n')"><p class="card-text">[[line]]</p></template>
             </div>
+            <div id="fear-description-div" class="p-3 mt-1" style="text-align: center;">
+                <template v-for="line in fear_item.fear_colors_text.split('\n')"><p class="card-text">[[line]]</p></template>
+            </div>
             <!-- <h5 class="card-title">Hello</h5> -->
             <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
         </div>
+      </div>
+<!--       <div class="modal-footer">
+      </div> -->
     </div>
+  </div>
 </div>
+
+<!-- <div class="row" style="height: 100%;"> -->
+    <!-- COLLECTION AREA -->
+    <!-- <div id="fear-image-div" class="grid"> -->
+        <!-- <div class="grid-sizer"></div> -->
+<!-- <div id="fear-collection-div" class="col-xl-9 col-lg-9 col-md-8 col-sm-6 order-2 order-md-1 order-sm-1"> -->
+<div id="fear-collection-div" class="">
+    {% for fear_item in fear_items %}
+        <div class="image_blend_div grid-item" id="{{fear_item.pk}}">
+            <div class="image2">
+                {% thumbnail fear_item.image_2 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
+                    <img src="{{ im.url }}" class="fear-image""/>
+                {% endthumbnail %}
+            </div>
+            <div class="blended_image">
+                {% thumbnail fear_item.image_1 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
+                    <img src="{{ im.url }}" class="fear-image""/>
+                {% endthumbnail %}
+                {% thumbnail fear_item.image_2 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
+                    <img src="{{ im.url }}" class="fear-image""/>
+                {% endthumbnail %}
+            </div>
+            <div class="image1">
+                {% thumbnail fear_item.image_1 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
+                    <img src="{{ im.url }}" class="fear-image""/>
+                {% endthumbnail %}
+            </div>
+            <div class="overlay">
+                {% if fear_item.image_2 %}
+                    <div class="text">{{fear_item.fear_text|linebreaks}}</div>
+                {% else %}
+                    <div class="text">SINGLE FEAR MATE</div>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+<!-- </div> -->
 
 {% endblock %}
 
