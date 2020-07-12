@@ -32,22 +32,25 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div> -->
-      <div class="modal-body" id="fear-description-div">
+      <div class="modal-body" id="fear-description-div" v-if="modal_fear_item">
+            <div id="description-image-div" v-if="modal_fear_item.image_2">
+                <img class="mt-0" v-bind:src="'/media/' + modal_fear_item.image_1_tb" alt="Card image cap">
+                <img class="mt-0" v-if="modal_fear_item.image_2_tb" v-bind:src="'/media/' + modal_fear_item.image_2_tb" alt="Card image cap">
+            </div>
+            <div id="description-image-div-single" v-if="!modal_fear_item.image_2">
+                <img class="mt-0" v-bind:src="'/media/' + modal_fear_item.image_1_tb" alt="Card image cap">
+            </div>
 
-        <div id="fear-item-div" style="width: 100%;" v-if="fear_item">
-            <div id="description-image-div">
-                <img class="mt-0" v-bind:src="'/media/' + fear_item.image_1_tb" alt="Card image cap">
-                <img class="mt-0" v-if="fear_item.image_2_tb" v-bind:src="'/media/' + fear_item.image_2_tb" alt="Card image cap">
+            <div id="text-description-div" class="p-3 mt-2" style="text-align: center;">
+                <h6>What are you afraid of?</h6>
+                <template v-for="line in modal_fear_item.fear_text.split('\n')"><p class="card-text">[[line]]</p></template>
             </div>
-            <div id="text-description-div" class="p-3 mt-1" style="text-align: center;">
-                <template v-for="line in fear_item.fear_text.split('\n')"><p class="card-text">[[line]]</p></template>
-            </div>
-            <div id="fear-description-div" class="p-3 mt-1" style="text-align: center;">
-                <template v-for="line in fear_item.fear_colors_text.split('\n')"><p class="card-text">[[line]]</p></template>
+            <div id="fear-description-div" class="p-3 mt-2" style="text-align: center;">
+                <h6>What does your fear look like?</h6>
+                <template v-for="line in modal_fear_item.fear_colors_text.split('\n')"><p class="card-text">[[line]]</p></template>
             </div>
             <!-- <h5 class="card-title">Hello</h5> -->
             <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-        </div>
       </div>
 <!--       <div class="modal-footer">
       </div> -->
@@ -60,31 +63,35 @@
     <div class="col-md-8 mb-3">
         <div id="fear-image-div">
             <div id="blended-image-div" class="blended-image-container">
-                <img id="blend-image-0" src="" class="fear-image blended image-0"/>
-                <img id="blend-image-1" src="" class="fear-image blended image-1"/>
-                <img id="blend-image-2" src="" class="fear-image blended image-2"/>
+                <img v-bind:id="'blend-image-' + index" v-bind:src="'/media/' + item.image_tb" v-bind:class="'fear-image blended image-' + index" v-bind:pk="item.fearItem.pk" v-bind:imageIndex="item.imageIndex" v-for="(item,index) in fear_items" :key="item.id" />
             </div>
-                <div id="sub-images-div">
-                    <div id="sub-image-div-0" class="sub-image-div">
-                        <img class="fear-image image-0" src="" class="fear-image sub-image"/>
-                        <div class="overlay">
-                            <div id="image-0-text" class="text"></div>
-                        </div>
-                    </div>
-                    <div id="sub-image-div-1" class="sub-image-div">
-                        <img class="fear-image image-1" src="" class="fear-image sub-image"/>
-                        <div class="overlay">
-                            <div id="image-1-text" class="text"></div>
-                        </div>
-                    </div>
-                    <div id="sub-image-div-2" class="sub-image-div">
-                        <img class="fear-image image-2" src="" class="fear-image sub-image"/>
-                        <div class="overlay">
-                            <div id="image-2-text" class="text"></div>
+            <div id="sub-images-div">
+                <div class="sub-image-div" v-for="(item,index) in fear_items" :key="item.id" v-bind:imageIndex="item.imageIndex">
+                    <img v-bind:class="'fear-image sub-image image-' + index" v-bind:src="'/media/' + item.image_tb"/>
+                    <div class="overlay">
+                        <div v-bind:id="'image-' + index + '-text'" class="text" v-html="item.fearText">
                         </div>
                     </div>
                 </div>
-            </a>
+<!--                 <div id="sub-image-div-0" class="sub-image-div">
+                    <img class="fear-image image-0" v-if="fear_items[0]" v-bind:src="'/media/' + fear_items[0].image_tb" class="fear-image sub-image"/>
+                    <div class="overlay">
+                        <div id="image-0-text" class="text"></div>
+                    </div>
+                </div>
+                <div id="sub-image-div-1" class="sub-image-div">
+                    <img class="fear-image image-1" v-if="fear_items[1]" v-bind:src="'/media/' + fear_items[1].image_tb" class="fear-image sub-image"/>
+                    <div class="overlay">
+                        <div id="image-1-text" class="text"></div>
+                    </div>
+                </div>
+                <div id="sub-image-div-2" class="sub-image-div">
+                    <img class="fear-image image-2" v-if="fear_items[2]" v-bind:src="'/media/' + fear_items[2].image_tb" class="fear-image sub-image"/>
+                    <div class="overlay">
+                        <div id="image-2-text" class="text"></div>
+                    </div>
+                </div> -->
+            </div>
         </div>
     </div>
     <div class="col-md-4 pr-3" id="viz-description-div">
@@ -95,12 +102,12 @@
             The individual images making up the animated composite of fears are shown directly below it. Hover over each image to view the corresponding fears that lie behind each drawing.
         </p>
         <p>
-            Hover over the image to pause the animation, and press spacebar to perform a capture. The resulting image can be viewed in the Transmutation Gallery.
+            Hover over the image to pause the animation, and press spacebar to perform a capture. The resulting image can be viewed in the <a href="{% url 'viz1_gallery' %}">Transmutation Gallery</a>.
         </p>
         <div id="captured-image-div" style="display:none;" class="blended-image-container">
-            <img id="captured-image-0" src="" class="fear-image blended"/>
-            <img id="captured-image-1" src="" class="fear-image blended"/>
-            <img id="captured-image-2" src="" class="fear-image blended"/>
+            <img id="captured-image-0" v-if="fear_items[0]" v-bind:src="'/media/' + fear_items[0].image_tb" class="fear-image blended"/>
+            <img id="captured-image-1" v-if="fear_items[1]" v-bind:src="'/media/' + fear_items[1].image_tb" class="fear-image blended"/>
+            <img id="captured-image-2" v-if="fear_items[2]" v-bind:src="'/media/' + fear_items[2].image_tb" class="fear-image blended"/>
         </div>
     </div>
 </div>
@@ -109,9 +116,7 @@
 
 {% block custom_js %}
     <!-- Main.js -->
-
-
-
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.3/gsap.min.js"></script>
     <script src="{% static "MainApp/scripts/ext/jquery.touchSwipe.min.js" %}" %}"></script>
     <script src="{% static "MainApp/scripts/utils.js" %}" %}"></script>

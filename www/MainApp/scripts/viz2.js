@@ -13,7 +13,7 @@ var app = new Vue({
     delimiters: ['[[', ']]'],
     el: '#fear-description-div',
     data: {
-        fear_item: null,
+        modal_fear_item: null,
         current_pk:null,
     },
     mounted: function() {
@@ -31,9 +31,9 @@ var app = new Vue({
         if (first_pk) {
             $.getJSON( "/get_fear_item/", {"pk":first_pk}, function( data ) {
                 self.current_pk = data[0].pk;
-                self.fear_item = data[0].fields;
-                self.fear_item.pk = self.current_pk;
-                // console.log(self.fear_item);
+                self.modal_fear_item = data[0].fields;
+                self.modal_fear_item.pk = self.current_pk;
+                // console.log(self.modal_fear_item);
 
                 // Highlight it
                 $("#" + self.current_pk).addClass("selected-fear-item-div");
@@ -61,10 +61,10 @@ var app = new Vue({
 
                 $("#" + self.current_pk).removeClass("selected-fear-item-div");
 
-                self.fear_item = data[0].fields;
-                self.fear_item.pk = data[0].pk;
+                self.modal_fear_item = data[0].fields;
+                self.modal_fear_item.pk = data[0].pk;
                 self.current_pk = data[0].pk
-                console.log(self.fear_item);
+                console.log(self.modal_fear_item);
 
                 $("#" + self.current_pk).addClass("selected-fear-item-div");
 
