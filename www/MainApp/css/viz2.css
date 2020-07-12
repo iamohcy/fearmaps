@@ -93,6 +93,11 @@
 
 .blended_image img:first-child {
     position: absolute;
+    /*mix-blend-mode: multiply;*/
+}
+
+.blended_image img:last-child {
+    /*position: absolute;*/
     mix-blend-mode: multiply;
 }
 

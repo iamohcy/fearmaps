@@ -21,7 +21,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div> -->
-      <div class="modal-body" id="fear-description-div">
+      <div class="modal-body" id="fear-description-div" v-if="fear_item">
             <div id="description-image-div" v-if="fear_item.image_2">
                 <img class="mt-0" v-bind:src="'/media/' + fear_item.image_1_tb" alt="Card image cap">
                 <img class="mt-0" v-if="fear_item.image_2_tb" v-bind:src="'/media/' + fear_item.image_2_tb" alt="Card image cap">
