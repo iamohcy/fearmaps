@@ -19,13 +19,16 @@ from nltk.tokenize import TweetTokenizer
 from sklearn.feature_extraction.text import CountVectorizer
 import string
 
-
+@require_http_methods(["GET"])
 def get_fear_item(request):
     pk = request.GET.get('pk')
+
     fearItem = FearItem.objects.filter(pk=pk)
-    fearItemJson = json.loads(serializers.serialize('json', fearItem))
+    fearItemJson = json.loads(serializers.serialize('json', fearItem,
+        fields=('gender','age','country','fear_text','fear_colors_text','image_1','image_2','image_1_tb','image_2_tb','valid','date_created')))
     return JsonResponse(fearItemJson, safe=False)
 
+@require_http_methods(["GET"])
 def get_word_cloud(request):
 
     fearItems = FearItem.objects.exclude(valid=False)
@@ -62,7 +65,7 @@ def get_word_cloud(request):
         queryset = fearItems.filter(fear_text__icontains=word)
         remaining_queryset = remaining_queryset.exclude(fear_text__icontains=word)
         # allTexts.append([queryset.count(),[fearItem.fear_text for fearItem in queryset]])
-        allTexts.append({"word":word,"fear_items":json.loads(serializers.serialize('json', queryset))})
+        allTexts.append({"word":word,"fear_items":json.loads(serializers.serialize('json', queryset, fields=('pk','gender','age','country','fear_text','fear_colors_text','image_1','image_2','image_1_tb','image_2_tb','valid','date_created')))})
         index += 1
 
     # allTexts.append({"word":"_NONE_","fear_items":json.loads(serializers.serialize('json', remaining_queryset))})
@@ -121,7 +124,6 @@ def add_composite(request):
     except Exception as e:
         return JsonResponse({"success": False, "error":str(e)})
 
-
 @require_http_methods(["GET"])
 def fear_items(request):
     fearItems = FearItem.objects.exclude(valid=False).order_by("-date_created")
@@ -162,6 +164,8 @@ def viz1_gallery(request):
     return render(request, 'MainApp/viz1_gallery.html', context)
 
 def viz2(request):
+    pk = request.GET.get('pk', '')
+
     filtered_fear_items = FearItem.objects.exclude(valid=False).order_by("-date_created")
     context = {"fear_items": filtered_fear_items}
     return render(request, 'MainApp/viz2.html', context)

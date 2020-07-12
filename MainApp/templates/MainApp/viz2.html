@@ -16,7 +16,7 @@
         <!-- <div class="grid-sizer"></div> -->
     <div id="fear-collection-div" class="col-xl-9 col-lg-9 col-md-8 col-sm-6 order-2 order-md-1 order-sm-1">
         {% for fear_item in fear_items %}
-            <div class="image_blend_div grid-item" pk="{{fear_item.pk}}">
+            <div class="image_blend_div grid-item" id="{{fear_item.pk}}">
                 <div class="image2">
                     {% thumbnail fear_item.image_2 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
                         <img src="{{ im.url }}" class="fear-image""/>

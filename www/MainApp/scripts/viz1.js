@@ -51,6 +51,7 @@ $(function() {
             $('#blend-image-'+i).attr('pk', fearItem.pk);
             $('#blend-image-'+i).attr('imageIndex', imageIndex);
             $("#image-" + i + "-text").html(splitFearText(fearItem.fields.fear_text));
+            $("#image-" + i + "-link").attr("href", "/viz2/?pk=" + fearItem.pk);
         }
 
         var opacityCombinations = [
@@ -94,8 +95,8 @@ $(function() {
                 $('#blend-image-'+replacementIndex).attr('pk', newFearItem.pk);
                 $('#blend-image-'+replacementIndex).attr('imageIndex', imageIndex);
                 $("#image-" + replacementIndex + "-text").html(splitFearText(newFearItem.fields.fear_text));
+                $("#image-" + replacementIndex + "-link").attr("href", "/viz2/?pk=" + newFearItem.pk);
             }
-
 
             // replacementIndex = (replacementIndex + 1) % MAX_NUM_SAMPLES;
         }
