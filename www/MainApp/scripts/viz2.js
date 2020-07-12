@@ -41,7 +41,8 @@ var app = new Vue({
             $("#" + self.current_pk).addClass("selected-fear-item-div");
 
             // element which needs to be scrolled to
-            var element = document.querySelector("#"+data[0].pk);
+            var element = document.querySelector("[id='" + data[0].pk + "']");
+
             // scroll to element
             element.scrollIntoView();
 
