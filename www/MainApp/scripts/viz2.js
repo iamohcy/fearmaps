@@ -28,25 +28,24 @@ var app = new Vue({
 
         var self = this;
         var first_pk = $.urlParam('pk'); //edit
-        if (!first_pk) {
-            first_pk = $("#fear-collection-div .image_blend_div:first-child").attr("id");
+        if (first_pk) {
+            $.getJSON( "/get_fear_item/", {"pk":first_pk}, function( data ) {
+                self.current_pk = data[0].pk;
+                self.fear_item = data[0].fields;
+                self.fear_item.pk = self.current_pk;
+                // console.log(self.fear_item);
+
+                // Highlight it
+                $("#" + self.current_pk).addClass("selected-fear-item-div");
+
+                // element which needs to be scrolled to
+                var element = document.querySelector("[id='" + data[0].pk + "']");
+
+                // scroll to element
+                element.scrollIntoView();
+                $("#fear-description-modal").modal();
+            });
         }
-        $.getJSON( "/get_fear_item/", {"pk":first_pk}, function( data ) {
-            self.current_pk = data[0].pk;
-            self.fear_item = data[0].fields;
-            self.fear_item.pk = self.current_pk;
-            // console.log(self.fear_item);
-
-            // Highlight it
-            $("#" + self.current_pk).addClass("selected-fear-item-div");
-
-            // element which needs to be scrolled to
-            var element = document.querySelector("[id='" + data[0].pk + "']");
-
-            // scroll to element
-            element.scrollIntoView();
-
-        });
 
         var DURATION = 3;
         var tl = gsap.timeline({repeat: -1, repeatDelay: 0});
@@ -68,6 +67,8 @@ var app = new Vue({
                 console.log(self.fear_item);
 
                 $("#" + self.current_pk).addClass("selected-fear-item-div");
+
+                $("#fear-description-modal").modal();
             });
         })
 

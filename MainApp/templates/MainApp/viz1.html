@@ -22,6 +22,39 @@
   </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="fear-description-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+<!--       <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Fear Entry</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <div class="modal-body" id="fear-description-div">
+
+        <div id="fear-item-div" style="width: 100%;" v-if="fear_item">
+            <div id="description-image-div">
+                <img class="mt-0" v-bind:src="'/media/' + fear_item.image_1_tb" alt="Card image cap">
+                <img class="mt-0" v-if="fear_item.image_2_tb" v-bind:src="'/media/' + fear_item.image_2_tb" alt="Card image cap">
+            </div>
+            <div id="text-description-div" class="p-3 mt-1" style="text-align: center;">
+                <template v-for="line in fear_item.fear_text.split('\n')"><p class="card-text">[[line]]</p></template>
+            </div>
+            <div id="fear-description-div" class="p-3 mt-1" style="text-align: center;">
+                <template v-for="line in fear_item.fear_colors_text.split('\n')"><p class="card-text">[[line]]</p></template>
+            </div>
+            <!-- <h5 class="card-title">Hello</h5> -->
+            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+        </div>
+      </div>
+<!--       <div class="modal-footer">
+      </div> -->
+    </div>
+  </div>
+</div>
+
 <!-- COLLECTION AREA -->
 <div class="row" id="viz-container">
     <div class="col-md-8 mb-3">
@@ -32,30 +65,24 @@
                 <img id="blend-image-2" src="" class="fear-image blended image-2"/>
             </div>
                 <div id="sub-images-div">
-                    <a id="image-0-link" href="#">
-                        <div class="sub-image-div">
-                            <img class="fear-image image-0" src="" class="fear-image sub-image"/>
-                            <div class="overlay">
-                                <div id="image-0-text" class="text"></div>
-                            </div>
+                    <div id="sub-image-div-0" class="sub-image-div">
+                        <img class="fear-image image-0" src="" class="fear-image sub-image"/>
+                        <div class="overlay">
+                            <div id="image-0-text" class="text"></div>
                         </div>
-                    </a>
-                    <a id="image-1-link" href="#">
-                        <div class="sub-image-div">
-                            <img class="fear-image image-1" src="" class="fear-image sub-image"/>
-                            <div class="overlay">
-                                <div id="image-1-text" class="text"></div>
-                            </div>
+                    </div>
+                    <div id="sub-image-div-1" class="sub-image-div">
+                        <img class="fear-image image-1" src="" class="fear-image sub-image"/>
+                        <div class="overlay">
+                            <div id="image-1-text" class="text"></div>
                         </div>
-                    </a>
-                    <a id="image-2-link" href="#">
-                        <div class="sub-image-div">
-                            <img class="fear-image image-2" src="" class="fear-image sub-image"/>
-                            <div class="overlay">
-                                <div id="image-2-text" class="text"></div>
-                            </div>
+                    </div>
+                    <div id="sub-image-div-2" class="sub-image-div">
+                        <img class="fear-image image-2" src="" class="fear-image sub-image"/>
+                        <div class="overlay">
+                            <div id="image-2-text" class="text"></div>
                         </div>
-                    </a>
+                    </div>
                 </div>
             </a>
         </div>
