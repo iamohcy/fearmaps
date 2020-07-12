@@ -20,6 +20,12 @@ from sklearn.feature_extraction.text import CountVectorizer
 import string
 
 
+def get_fear_item(request):
+    pk = request.GET.get('pk')
+    fearItem = FearItem.objects.filter(pk=pk)
+    fearItemJson = json.loads(serializers.serialize('json', fearItem))
+    return JsonResponse(fearItemJson, safe=False)
+
 def get_word_cloud(request):
 
     fearItems = FearItem.objects.exclude(valid=False)

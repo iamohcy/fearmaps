@@ -10,35 +10,51 @@
 {% endblock %}
 
 {% block content %}
-<!-- COLLECTION AREA -->
-<div id="fear-image-div" class="grid">
-    <!-- <div class="grid-sizer"></div> -->
+<div class="row" style="height: 100%;">
+    <!-- COLLECTION AREA -->
+    <!-- <div id="fear-image-div" class="grid"> -->
+        <!-- <div class="grid-sizer"></div> -->
+    <div id="fear-collection-div" class="col-xl-9 col-lg-9 col-md-8 col-sm-6 order-2 order-md-1 order-sm-1">
+        {% for fear_item in fear_items %}
+            <div class="image_blend_div grid-item" pk="{{fear_item.pk}}">
+                <div class="image2">
+                    {% thumbnail fear_item.image_2 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
+                        <img src="{{ im.url }}" class="fear-image""/>
+                    {% endthumbnail %}
+                </div>
+                <div class="blended_image">
+                    {% thumbnail fear_item.image_1 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
+                        <img src="{{ im.url }}" class="fear-image""/>
+                    {% endthumbnail %}
+                    {% thumbnail fear_item.image_2 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
+                        <img src="{{ im.url }}" class="fear-image""/>
+                    {% endthumbnail %}
+                </div>
+                <div class="image1">
+                    {% thumbnail fear_item.image_1 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
+                        <img src="{{ im.url }}" class="fear-image""/>
+                    {% endthumbnail %}
+                </div>
+                <div class="overlay">
+                    <div class="text">{{fear_item.fear_text|linebreaks}}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 
-    {% for fear_item in fear_items %}
-        <div class="image_blend_div">
-            <div class="image2">
-                {% thumbnail fear_item.image_2 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
-                    <img src="{{ im.url }}" class="fear-image""/>
-                {% endthumbnail %}
+    <div id="fear-description-div" class="col-xl-3 col-lg-3 col-md-4 col-sm-6 order-1 order-md-2 order-sm-2">
+        <div id="fear-item-div" style="width: 100%;" v-if="fear_item">
+            <div id="description-image-div">
+                <img class="mt-0" v-bind:src="'/media/' + fear_item.image_1_tb" alt="Card image cap">
+                <img class="mt-0" v-if="fear_item.image_2_tb" v-bind:src="'/media/' + fear_item.image_2_tb" alt="Card image cap">
             </div>
-            <div class="blended_image">
-                {% thumbnail fear_item.image_1 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
-                    <img src="{{ im.url }}" class="fear-image""/>
-                {% endthumbnail %}
-                {% thumbnail fear_item.image_2 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
-                    <img src="{{ im.url }}" class="fear-image""/>
-                {% endthumbnail %}
+            <div id="text-description-div" class="p-3 mt-1" style="text-align: center;">
+                <template v-for="line in fear_item.fear_text.split('\n')"><p class="card-text">[[line]]</p></template>
             </div>
-            <div class="image1">
-                {% thumbnail fear_item.image_1 "500x500" crop="center" format="JPEG" background="#FFFFFF" as im %}
-                    <img src="{{ im.url }}" class="fear-image""/>
-                {% endthumbnail %}
-            </div>
-            <div class="overlay">
-                <div class="text">{{fear_item.fear_text|linebreaks}}</div>
-            </div>
+            <!-- <h5 class="card-title">Hello</h5> -->
+            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
         </div>
-    {% endfor %}
+    </div>
 </div>
 
 {% endblock %}
@@ -46,7 +62,9 @@
 
 {% block custom_js %}
     <!-- Main.js -->
-    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <!-- <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.3/gsap.min.js"></script>
     <script src="{% static "MainApp/scripts/viz2.js" %}" %}"></script>
 {% endblock %}

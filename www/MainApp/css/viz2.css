@@ -1,6 +1,7 @@
-#fear-image-div {
+#fear-collection-div {
     /*background-color: #999;*/
     font-size: 0px;
+    padding: 0px;
 }
 
 .fear-image {
@@ -16,7 +17,37 @@
 .image_blend_div:hover {
 }
 
-@media only screen and (min-width: 320px) and (max-width: 479px){
+@media only screen and (min-width: 320px) and (max-width: 575px){
+    .grid-sizer, .grid-item {
+        width: 50%;
+    }
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px){
+    .grid-sizer, .grid-item {
+        width: 50%;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px){
+    .grid-sizer, .grid-item {
+        width: 25%;
+    }
+}
+
+@media only screen and (min-width: 992px){
+    .grid-sizer, .grid-item {
+        width: 20%;
+    }
+}
+
+@media only screen and (min-width: 1200px){
+    .grid-sizer, .grid-item {
+        width: 16.66%;
+    }
+}
+
+/*@media only screen and (min-width: 320px) and (max-width: 479px){
     .image_blend_div {
         width: 50%;
     }
@@ -38,7 +69,7 @@
     .image_blend_div {
         width: 12.5%;
     }
-}
+}*/
 
 /*.grid-sizer, .grid-item {
         width: 10%;
@@ -61,6 +92,7 @@
 
 .image_blend_div {
     position: relative;
+    cursor: pointer;
 }
 
 /*.image_blend_div .image1 {
@@ -121,4 +153,51 @@
 /* Hide scrollbar for IE and Edge */
 .overlay {
     -ms-overflow-style: none;
+}
+
+#fear-collection-div {
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 479px){
+    .grid-sizer, .grid-item {
+        width: 50%;
+    }
+}
+
+
+#fear-description-div {
+    padding: 0px;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#description-image-div {
+    position: relative;
+}
+
+#description-image-div img:first-child {
+    position: absolute;
+}
+
+
+#description-image-div img:first-child {
+    opacity: 1.0;
+    transition: opacity 0.6s ease-in-out;
+    -moz-transition: opacity 0.6s ease-in-out;
+    -webkit-transition: opacity 0.6s ease-in-out;
+}
+
+#description-image-div img:first-child:hover {
+    opacity: 0.0;
+    transition: opacity .6s ease-in-out;
+    -moz-transition: opacity .6s ease-in-out;
+    -webkit-transition: opacity .6s ease-in-out;
+}​
+
+#text-description-div {
+    text-align: center;
 }
