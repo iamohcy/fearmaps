@@ -44,8 +44,8 @@ def get_fear_item(request):
 @require_http_methods(["GET"])
 def get_word_cloud(request):
 
-    DEFAULT_MIN_LINKS = 2
-    DEFAULT_MAX_WORDS = 50
+    DEFAULT_MIN_LINKS = 2 # minimum number of links a word must have to be included
+    DEFAULT_MAX_WORDS = 50 # maximum number of words we want in our cloud
 
     try:
         min_links = int(request.GET.get("min_links", DEFAULT_MIN_LINKS))

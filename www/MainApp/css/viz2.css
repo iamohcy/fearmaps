@@ -144,8 +144,10 @@
     position: absolute;
     padding: 15px;
 
-    display: flex;
-    justify-content: safe center;
+    /*display: flex;*/
+    /*justify-content: safe center;*/
+
+
     /*align-items: safe center;*/
 
 /*    top: 50%;
