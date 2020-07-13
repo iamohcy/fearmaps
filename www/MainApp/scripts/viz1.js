@@ -99,11 +99,10 @@ $.getJSON( "/fear_items/", function( fearData ) {
                     Vue.set(self.fear_items, replacementIndex, {
                         image_tb: image_tb,
                         imageIndex: imageIndex,
-                        fearItem: fearItem,
-                        fearText: splitFearText(fearItem.fields.fear_text),
-                        fearColorsText: splitFearText(fearItem.fields.fear_colors_text),
+                        fearItem: newFearItem,
+                        fearText: splitFearText(newFearItem.fields.fear_text),
+                        fearColorsText: splitFearText(newFearItem.fields.fear_colors_text),
                     });
-                    console.log("NEW!");
                     console.log(self.fear_items);
 
                     // $('.image-'+replacementIndex).attr('src',"/media/" + image_tb);
