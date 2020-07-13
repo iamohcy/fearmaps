@@ -61,6 +61,7 @@ var app = new Vue({
 
                 $("#" + self.current_pk).removeClass("selected-fear-item-div");
 
+                console.log(data, pk);
                 self.modal_fear_item = data[0].fields;
                 self.modal_fear_item.pk = data[0].pk;
                 self.current_pk = data[0].pk

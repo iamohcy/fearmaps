@@ -34,7 +34,7 @@ def get_fear_items(request):
 
 @require_http_methods(["GET"])
 def get_fear_item(request):
-    pk = request.GET.get('pks')
+    pk = request.GET.get('pk')
 
     fearItem = FearItem.objects.filter(pk=pk)
     fearItemJson = json.loads(serializers.serialize('json', fearItem,
@@ -181,14 +181,15 @@ def viz2(request):
 
     valid_fear_items = FearItem.objects.exclude(valid=False).order_by("-date_created")
 
-    filtered_fear_items_double = list(valid_fear_items.exclude(image_2=""))
-    filtered_fear_items_single = list(valid_fear_items.filter(image_2=""))
+    filtered_fear_items = list(valid_fear_items)
+    random.shuffle(filtered_fear_items)
 
-    num_single = len(filtered_fear_items_single)
-
-    filtered_fear_items = filtered_fear_items_double
-    for i in range(num_single):
-        filtered_fear_items.insert(random.randint(0, len(filtered_fear_items)), filtered_fear_items_single[i])
+    # filtered_fear_items_double = list(valid_fear_items.exclude(image_2=""))
+    # filtered_fear_items_single = list(valid_fear_items.filter(image_2=""))
+    # num_single = len(filtered_fear_items_single)
+    # filtered_fear_items = filtered_fear_items_double
+    # for i in range(num_single):
+    #     filtered_fear_items.insert(random.randint(0, len(filtered_fear_items)), filtered_fear_items_single[i])
 
     # filtered_fear_items = list(filtered_fear_items_double) + list(filtered_fear_items_single)
     # filtered_fear_items_single = FearItem.objects.exclude(valid=False).order_by("-date_created")

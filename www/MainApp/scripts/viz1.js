@@ -184,7 +184,7 @@ $.getJSON( "/fear_items/", function( fearData ) {
             });
 
             $(".sub-image-div").click(function() {
-                var imageIndex = $(this).attr("imageIndex");
+                var imageIndex = $(this).attr("fearIndex");
                 console.log(imageIndex);
                 self.modal_fear_item = self.fear_items[imageIndex].fearItem.fields;
                 $("#fear-description-modal").modal();

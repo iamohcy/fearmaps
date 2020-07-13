@@ -45,6 +45,7 @@
                 <!-- <h6>What are you afraid of?</h6> -->
                 <template v-for="line in modal_fear_item.fear_text.split('\n')"><p class="card-text">[[line]]</p></template>
             </div>
+            <div style="text-align: center;">∞</div>
             <div id="fear-description-div" class="p-3 mt-2" style="text-align: center;">
                 <!-- <h6>What does your fear look like?</h6> -->
                 <template v-for="line in modal_fear_item.fear_colors_text.split('\n')"><p class="card-text">[[line]]</p></template>
@@ -66,7 +67,7 @@
                 <img v-bind:id="'blend-image-' + index" v-bind:src="'/media/' + item.image_tb" v-bind:class="'fear-image blended image-' + index" v-bind:pk="item.fearItem.pk" v-bind:imageIndex="item.imageIndex" v-for="(item,index) in fear_items" :key="item.id" />
             </div>
             <div id="sub-images-div">
-                <div class="sub-image-div" v-for="(item,index) in fear_items" :key="item.id" v-bind:imageIndex="item.imageIndex">
+                <div class="sub-image-div" v-for="(item,index) in fear_items" :key="item.id" v-bind:fearIndex="index" v-bind:imageIndex="item.imageIndex">
                     <img v-bind:class="'fear-image sub-image image-' + index" v-bind:src="'/media/' + item.image_tb"/>
                     <div class="overlay">
                         <div v-bind:id="'image-' + index + '-text'" class="text" v-html="item.fearText">
@@ -99,7 +100,7 @@
             This shifting image is a morphing composite of fear drawings submitted by different participants. Three drawings are randomly selected from the pool of submissions, and superimposed over one another. As time goes by, these images are gradually replaced by drawings done by new participants.
         </p>
         <p>
-            The individual images making up the animated composite of fears are shown directly below it. Hover over each image to view the corresponding fears that lie behind each drawing.
+            The individual images making up the animated composite of fears are shown directly below it. Hover over each image to view the corresponding fears that lie behind each drawing, or click it to view the complete entry.
         </p>
         <p>
             Hover over the image to pause the animation, and press spacebar to perform a capture. The resulting image can be viewed in the <a href="{% url 'viz1_gallery' %}">Transmutation Gallery</a>.
