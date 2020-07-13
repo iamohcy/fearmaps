@@ -52,6 +52,45 @@
         {% endblock %}
     </div> -->
     <main role="main" id="main">
+
+<!-- Modal -->
+<div class="modal fade" v-if="modal_fear_item" id="fear-description-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+<!--       <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Fear Entry</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <div class="modal-body" id="fear-description-div" v-if="modal_fear_item">
+            <div id="description-image-div" v-if="modal_fear_item.image_2">
+                <img class="mt-0" v-bind:src="'/media/' + modal_fear_item.image_1_tb" alt="Card image cap">
+                <img class="mt-0" v-if="modal_fear_item.image_2_tb" v-bind:src="'/media/' + modal_fear_item.image_2_tb" alt="Card image cap">
+            </div>
+            <div id="description-image-div-single" v-if="!modal_fear_item.image_2">
+                <img class="mt-0" v-bind:src="'/media/' + modal_fear_item.image_1_tb" alt="Card image cap">
+            </div>
+
+            <div id="text-description-div" v-if="modal_fear_item.fear_text.length > 1" class="p-3 mt-2" style="text-align: center;">
+                <!-- <h6>What are you afraid of?</h6> -->
+                <template v-for="line in modal_fear_item.fear_text.split('\n')"><p class="card-text">[[line]]</p></template>
+            </div>
+            <div v-if="modal_fear_item.fear_colors_text.length > 1" style="text-align: center;">∞</div>
+            <div id="fear-description-div" class="p-3 mt-2" v-if="modal_fear_item.fear_colors_text.length > 1" style="text-align: center;">
+                <!-- <h6>What does your fear look like?</h6> -->
+                <template v-for="line in modal_fear_item.fear_colors_text.split('\n')"><p class="card-text">[[line]]</p></template>
+            </div>
+            <!-- <h5 class="card-title">Hello</h5> -->
+            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+      </div>
+<!--       <div class="modal-footer">
+      </div> -->
+    </div>
+  </div>
+</div>
+
+
     {% block content %}
     {% endblock %}
     </main><!-- /.container -->
@@ -65,6 +104,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="{% static "BootstrapApplicationTheme/dist/toolkit.min.js" %}"></script>
+    <script src="{% static "MainApp/scripts/utils.js" %}?version=1"></script>
 
     {% block custom_js %}
     {% endblock %}

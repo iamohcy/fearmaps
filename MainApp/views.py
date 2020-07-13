@@ -44,13 +44,25 @@ def get_fear_item(request):
 @require_http_methods(["GET"])
 def get_word_cloud(request):
 
+    DEFAULT_MIN_LINKS = 2
+    DEFAULT_MAX_WORDS = 50
+
+    try:
+        min_links = int(request.GET.get("min_links", DEFAULT_MIN_LINKS))
+        max_words = int(request.GET.get("max_words", DEFAULT_MAX_WORDS))
+    except:
+        min_links = DEFAULT_MIN_LINKS
+        max_words = DEFAULT_MAX_WORDS
+
+    print(max_words, min_links)
+
     fearItems = FearItem.objects.exclude(valid=False)
 
-    for fearItem in fearItems:
-        print("***********************************************")
-        print("people" in fearItem.fear_text.lower())
-        print(fearItem.fear_text)
-
+    # for fearItem in fearItems:
+    #     print("***********************************************")
+    #     print("people" in fearItem.fear_text.lower())
+    #     print(fearItem.fear_text)
+# replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
     word_array = np.array([fearItem.fear_text.translate(str.maketrans('', '', string.punctuation)) for fearItem in fearItems])
 
     vectorizer = CountVectorizer(stop_words='english')
@@ -62,14 +74,15 @@ def get_word_cloud(request):
 
     # n = 20
     # top_n_words = [(vocabulary[ind], counts[ind]) for ind in sorted_ind[:n]]
-    top_n_words = [(vocabulary[ind], counts[ind]) for ind in sorted_ind if counts[ind] >= 2]
+    top_n_words = [(vocabulary[ind], counts[ind]) for ind in sorted_ind if counts[ind] >= min_links]
 
     allTexts = []
     index = 0
     remaining_queryset = FearItem.objects.exclude(valid=False)
 
     # OPTIMIZE THIS FURTHER??
-    while (remaining_queryset.count() >= 0) and (index < len(top_n_words)):
+    num_words = 0
+    while (remaining_queryset.count() >= 0) and (index < len(top_n_words)) and (num_words < max_words):
         word = top_n_words[index][0]
         count = top_n_words[index][1]
 
@@ -79,7 +92,9 @@ def get_word_cloud(request):
         queryset = fearItems.filter(fear_text__icontains=word)
         remaining_queryset = remaining_queryset.exclude(fear_text__icontains=word)
         # allTexts.append([queryset.count(),[fearItem.fear_text for fearItem in queryset]])
-        allTexts.append({"word":word,"fear_items":json.loads(serializers.serialize('json', queryset, fields=('pk','gender','age','country','fear_text','fear_colors_text','image_1','image_2','image_1_tb','image_2_tb','valid','date_created')))})
+        if (queryset.count() > 0):
+            allTexts.append({"word":word,"fear_items":json.loads(serializers.serialize('json', queryset, fields=('pk','gender','age','country','fear_text','fear_colors_text','image_1','image_2','image_1_tb','image_2_tb','valid','date_created')))})
+            num_words += 1
         index += 1
 
     # allTexts.append({"word":"_NONE_","fear_items":json.loads(serializers.serialize('json', remaining_queryset))})

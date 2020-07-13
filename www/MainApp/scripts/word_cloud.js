@@ -1,13 +1,24 @@
 var app = new Vue({
     delimiters: ['[[', ']]'],
-    el: '#description-div',
+    el: '#main',
     data: {
         fear_item: null,
+        modal_fear_item: null,
     },
     mounted: function() {
         var self = this;
-        $.getJSON( "/get_word_cloud/", function( data ) {
 
+        var min_links = getUrlParameter("min_links");
+        var max_words = getUrlParameter("max_words");
+        if (min_links == null) {
+            min_links = 2;
+        }
+        if (max_words == null) {
+            max_words = 50;
+        }
+
+        $.getJSON( "/get_word_cloud/", {min_links: min_links, max_words: max_words}, function( data ) {
+            console.log(data);
             var num_words = data.length;
             console.log("Num words = " + num_words);
 
@@ -207,6 +218,19 @@ var app = new Vue({
             }
 
             container.selectAll(".node").on("mouseover", focus).on("mouseout", unfocus);
+
+            container.selectAll(".fear-node").on("click", function(d) {
+                self.modal_fear_item = d.fields;
+                console.log(self.modal_fear_item);
+                $("#fear-description-modal").modal();
+                // var imageIndex = $(this).attr("fearIndex");
+                // console.log(imageIndex);
+                // self.modal_fear_item = self.fear_items[imageIndex].fearItem.fields;
+                // $("#fear-description-modal").modal();
+            });
+
+
+
 
                 // .append("circle")
                 // .attr("stroke", "#fff")
