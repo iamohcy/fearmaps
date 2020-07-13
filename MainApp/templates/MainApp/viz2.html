@@ -30,12 +30,12 @@
                 <img class="mt-0" v-bind:src="'/media/' + modal_fear_item.image_1_tb" alt="Card image cap">
             </div>
 
-            <div id="text-description-div" class="p-3 mt-2" style="text-align: center;">
+            <div id="text-description-div" v-if="modal_fear_item.fear_text.length > 1" class="p-3 mt-2" style="text-align: center;">
                 <!-- <h6>What are you afraid of?</h6> -->
                 <template v-for="line in modal_fear_item.fear_text.split('\n')"><p class="card-text">[[line]]</p></template>
             </div>
-            <div style="text-align: center;">∞</div>
-            <div id="fear-description-div" class="p-3 mt-0" style="text-align: center;">
+            <div v-if="modal_fear_item.fear_colors_text.length > 1" style="text-align: center;">∞</div>
+            <div id="fear-description-div" class="p-3 mt-2" v-if="modal_fear_item.fear_colors_text.length > 1" style="text-align: center;">
                 <!-- <h6>What does your fear look like?</h6> -->
                 <template v-for="line in modal_fear_item.fear_colors_text.split('\n')"><p class="card-text">[[line]]</p></template>
             </div>
@@ -47,7 +47,6 @@
     </div>
   </div>
 </div>
-
 <!-- <div class="row" style="height: 100%;"> -->
     <!-- COLLECTION AREA -->
     <!-- <div id="fear-image-div" class="grid"> -->
