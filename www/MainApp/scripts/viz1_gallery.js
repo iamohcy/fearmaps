@@ -10,4 +10,19 @@ $(window).load(function(){
         });
         $container.masonry();
     });
+
+    $(".blended-image-container").click(function() {
+        for (var i = 0; i < 3; i ++) {
+            var subImage = $(this).find(".image-" + i);
+            var opacity = subImage.css("opacity");
+            var src = "/media/" + subImage.attr("image_lg");
+
+            console.log(subImage, opacity, src);
+
+            $("#blend-image-lg-" + i).attr("src", src);
+            $("#blend-image-lg-" + i).css("opacity", opacity);
+        }
+        $("#composite-large-modal").modal();
+    });
+
 });

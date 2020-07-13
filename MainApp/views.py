@@ -18,10 +18,23 @@ import numpy as np
 from nltk.tokenize import TweetTokenizer
 from sklearn.feature_extraction.text import CountVectorizer
 import string
+import random
+
+# NOT REALLY WORKING, NEEDS FIXING
+@require_http_methods(["GET"])
+def get_fear_items(request):
+    # pks = request.GET.getlist('pks')
+    # print(pks)
+
+    # fearItems = FearItem.objects.filter(pk__in=pks)
+    # fearItemsJson = json.loads(serializers.serialize('json', fearItems,
+    #     fields=('gender','age','country','fear_text','fear_colors_text','image_1','image_2','image_1_tb','image_2_tb','valid','date_created')))
+    # return JsonResponse(fearItemsJson, safe=False)
+    return JsonResponse({}, safe=False)
 
 @require_http_methods(["GET"])
 def get_fear_item(request):
-    pk = request.GET.get('pk')
+    pk = request.GET.get('pks')
 
     fearItem = FearItem.objects.filter(pk=pk)
     fearItemJson = json.loads(serializers.serialize('json', fearItem,
@@ -166,7 +179,20 @@ def viz1_gallery(request):
 def viz2(request):
     pk = request.GET.get('pk', '')
 
-    filtered_fear_items = FearItem.objects.exclude(valid=False).order_by("-date_created")
+    valid_fear_items = FearItem.objects.exclude(valid=False).order_by("-date_created")
+
+    filtered_fear_items_double = list(valid_fear_items.exclude(image_2=""))
+    filtered_fear_items_single = list(valid_fear_items.filter(image_2=""))
+
+    num_single = len(filtered_fear_items_single)
+
+    filtered_fear_items = filtered_fear_items_double
+    for i in range(num_single):
+        filtered_fear_items.insert(random.randint(0, len(filtered_fear_items)), filtered_fear_items_single[i])
+
+    # filtered_fear_items = list(filtered_fear_items_double) + list(filtered_fear_items_single)
+    # filtered_fear_items_single = FearItem.objects.exclude(valid=False).order_by("-date_created")
+
     context = {"fear_items": filtered_fear_items}
     return render(request, 'MainApp/viz2.html', context)
 

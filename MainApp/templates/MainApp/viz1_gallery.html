@@ -11,6 +11,32 @@
 
 
 {% block content %}
+
+<!-- Modal -->
+<div class="modal fade" id="composite-large-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+<!--       <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Fear Entry</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <div class="modal-body" id="fear-description-div" v-if="modal_fear_item">
+            <div id="description-image-div" class="blended-image-container">
+                <img id="blend-image-lg-0" src="" class="fear-image blended image-0"/>
+                <img id="blend-image-lg-1" src="" class="fear-image blended image-0"/>
+                <img id="blend-image-lg-2" src="" class="fear-image blended image-0"/>
+            </div>
+            <!-- <h5 class="card-title">Hello</h5> -->
+            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+      </div>
+<!--       <div class="modal-footer">
+      </div> -->
+    </div>
+  </div>
+</div>
+
 <!-- COLLECTION AREA -->
 <div id="fear-composite-div" class="grid">
     <div class="grid-sizer"></div>
@@ -18,31 +44,31 @@
         <div id="blended-image-div" class="grid-item blended-image-container">
             {% if fear_composite.image_idx_0 == 0 %}
                 {% thumbnail fear_composite.fear_item_0.image_1 "600x600" crop="center" as im %}
-                    <img id="blend-image-0" style="opacity:{{fear_composite.opacity_0}};" src="{{ im.url }}" class="fear-image blended image-0"/>
+                    <img style="opacity:{{fear_composite.opacity_0}};" src="{{ im.url }}" class="fear-image blended image-0" image_lg="{{ fear_composite.fear_item_0.image_1 }}"/>
                 {% endthumbnail %}
             {% else %}
                 {% thumbnail fear_composite.fear_item_0.image_2 "600x600" crop="center" as im %}
-                    <img id="blend-image-0" style="opacity:{{fear_composite.opacity_0}};" src="{{ im.url }}" class="fear-image blended image-0"/>
+                    <img style="opacity:{{fear_composite.opacity_0}};" src="{{ im.url }}" class="fear-image blended image-0" image_lg="{{ fear_composite.fear_item_0.image_2 }}"/>
                 {% endthumbnail %}
             {% endif %}
 
             {% if fear_composite.image_idx_1 == 0 %}
                 {% thumbnail fear_composite.fear_item_1.image_1 "600x600" crop="center" as im %}
-                    <img id="blend-image-1" style="opacity:{{fear_composite.opacity_1}};" src="{{ im.url }}" class="fear-image blended image-1"/>
+                    <img style="opacity:{{fear_composite.opacity_1}};" src="{{ im.url }}" class="fear-image blended image-1" image_lg="{{ fear_composite.fear_item_1.image_1 }}"/>
                 {% endthumbnail %}
             {% else %}
                 {% thumbnail fear_composite.fear_item_1.image_2 "600x600" crop="center" as im %}
-                    <img id="blend-image-1" style="opacity:{{fear_composite.opacity_1}};" src="{{ im.url }}" class="fear-image blended image-1"/>
+                    <img style="opacity:{{fear_composite.opacity_1}};" src="{{ im.url }}" class="fear-image blended image-1" image_lg="{{ fear_composite.fear_item_1.image_2 }}"/>
                 {% endthumbnail %}
             {% endif %}
 
             {% if fear_composite.image_idx_2 == 0 %}
                 {% thumbnail fear_composite.fear_item_2.image_1 "600x600" crop="center" as im %}
-                    <img id="blend-image-2" style="opacity:{{fear_composite.opacity_2}};" src="{{ im.url }}" class="fear-image blended image-2"/>
+                    <img style="opacity:{{fear_composite.opacity_2}};" src="{{ im.url }}" class="fear-image blended image-2" image_lg="{{ fear_composite.fear_item_2.image_1 }}"/>
                 {% endthumbnail %}
             {% else %}
                 {% thumbnail fear_composite.fear_item_2.image_2 "600x600" crop="center" as im %}
-                    <img id="blend-image-2" style="opacity:{{fear_composite.opacity_2}};" src="{{ im.url }}" class="fear-image blended image-2"/>
+                    <img style="opacity:{{fear_composite.opacity_2}};" src="{{ im.url }}" class="fear-image blended image-2" image_lg="{{ fear_composite.fear_item_2.image_2 }}"/>
                 {% endthumbnail %}
             {% endif %}
         </div>
