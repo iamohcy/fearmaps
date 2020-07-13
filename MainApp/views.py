@@ -60,8 +60,9 @@ def get_word_cloud(request):
     counts = np.asarray(cv_fit.sum(axis=0))[0]
     sorted_ind = np.argsort(-counts) # we negate it to sort in reverse order
 
-    n = 20
-    top_n_words = [(vocabulary[ind], counts[ind]) for ind in sorted_ind[:n]]
+    # n = 20
+    # top_n_words = [(vocabulary[ind], counts[ind]) for ind in sorted_ind[:n]]
+    top_n_words = [(vocabulary[ind], counts[ind]) for ind in sorted_ind if counts[ind] >= 2]
 
     allTexts = []
     index = 0

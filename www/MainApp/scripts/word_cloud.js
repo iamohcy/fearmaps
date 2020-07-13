@@ -8,9 +8,12 @@ var app = new Vue({
         var self = this;
         $.getJSON( "/get_word_cloud/", function( data ) {
 
+            var num_words = data.length;
+            console.log("Num words = " + num_words);
+
             const scale = d3.scaleOrdinal(d3.schemeCategory10);
             function color(d) {
-                return scale(d.groupTotal/d.count);
+                return scale(d.wordIndex/num_words);
             }
 
             function drag(simulation) {
@@ -63,8 +66,10 @@ var app = new Vue({
                 var word = data[i].word;
                 nodes[currentIndex] = {
                     "word": word,
-                    "groupTotal": i+1,
-                    "count": 1,
+                    "wordIndex": i,
+                    "numChildren": data[i].fear_items.length,
+                    // "groupTotal": i+1,
+                    // "count": 1,
                     // "isWord": true,
                 }
                 wordToIndexDict[word] = currentIndex;
@@ -82,16 +87,17 @@ var app = new Vue({
                 for (var j = 0; j < fear_items.length; j++) {
                     var fear_item = fear_items[j];
                     if (!(fear_item.pk in pkToIndexDict)) {
-                        fear_item.groupTotal = i;
-                        fear_item.count = 1;
+                        // fear_item.groupTotal = i;
+                        // fear_item.count = 1;
                         nodes[currentIndex] = fear_item;
                         pkToIndexDict[fear_item.pk] = currentIndex;
                         currentIndex++;
                     }
-                    else {
-                        nodes[pkToIndexDict[fear_item.pk]].groupTotal += i;
-                        nodes[pkToIndexDict[fear_item.pk]].count += 1;
-                    }
+                    // else {
+                    //     nodes[wordToIndexDict[fear_item.pk]].groupTotal += i;
+                    //     nodes[pkToIndexDict[fear_item.pk]].groupTotal += i;
+                    //     nodes[pkToIndexDict[fear_item.pk]].count += 1;
+                    // }
 
                     var targetIndex = pkToIndexDict[fear_item.pk]
                     links.push({ source: sourceIndex, target: targetIndex });
@@ -109,7 +115,7 @@ var app = new Vue({
                 .force("link", d3.forceLink(links))
                 .force("charge", d3.forceManyBody().strength(function(d) {
                         if (d.word) {
-                            return -250;
+                            return -350;
                         }
                         else {
                             return -120;
@@ -159,7 +165,10 @@ var app = new Vue({
                 .text(function(d) {
                     return d.word;
                 })
-                .style("font-size", "10px")
+                .style("font-size", function(d) {
+                    var font_size = Math.cbrt(d.numChildren) * 10;
+                    return font_size + "px";
+                })
                 .attr("fill", function(d) {
                     return color(d);
                 });
@@ -184,6 +193,10 @@ var app = new Vue({
                     return neigh(index, o.index) ? 1 : 0.1;
                 });
                 link.style("opacity", function(o) {
+                    if (o.source.index == 0 && index != 0) {
+                        return 0.1;
+                    }
+
                     return o.source.index == index || o.target.index == index ? 1 : 0.1;
                 });
             }
