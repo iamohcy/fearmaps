@@ -224,7 +224,7 @@ def index(request):
     return render(request, 'MainApp/index.html', context)
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/admin')
-def viz(request):
+def vizadmin(request):
     filtered_fear_items = FearItem.objects.exclude(valid=False)
     context = {"fear_items": filtered_fear_items}
     return render(request, 'MainApp/viz.html', context)
