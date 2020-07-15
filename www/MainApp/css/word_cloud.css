@@ -28,8 +28,10 @@ a:active { color: #EE3124; }
     height: 100%;
 }
 
-#description-div {
+#explanation-div {
     padding-top: 30px;
+    font-size: 1rem;
+    overflow: auto;
 }
 
 #fear-item-div img {
@@ -49,15 +51,34 @@ a:active { color: #EE3124; }
     }
 
     #cloud-div {
-        height: 70% !important;
+        height: 80% !important;
     }
 
-    #description-div {
+    #explanation-div {
         padding-top: 10px !important;
-        height: 30% !important;
+        height: 20% !important;
+        font-size: 0.8rem;
     }
 
     #fear-item-div {
         flex-direction: row !important;
     }
 }
+
+
+/*TIP*/
+
+.tip-image {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+#tip-container-div {
+    max-width: 200px;
+}
+
+.tip-text {
+    font-size: 12px;
+    margin-top: 0.5rem;
+}
+

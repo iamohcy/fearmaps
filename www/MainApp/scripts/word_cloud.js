@@ -139,13 +139,54 @@ var app = new Vue({
                 .style("background-color", "white")
                 .attr("height", "100%")
                 .attr("width", "100%");
-
             var container = svg.append("g");
+
+            // Retrieve the template data from the HTML (jQuery is used here).
+            var template = $('#tooltip-template').html();
+
+            // Compile the template data into a function
+            var templateScript = Handlebars.compile(template);
+
+            /* Initialize tooltip */
+            const tip = d3.tip().attr('class', 'd3-tip').html(function(d) {
+                console.log(d);
+                return templateScript({
+                    fear_item: d.fields,
+                    fear_text_present: d.fields.fear_text.length > 1,
+                    fear_text: d.fields.fear_text.split('\n'),
+                    fear_colors_text_present: d.fields.fear_colors_text.length > 1,
+                    fear_colors_text: d.fields.fear_colors_text.split('\n'),
+                });
+            });
+
+            tip.direction(function(d) {
+                var transformStr = container.attr("transform");
+                var translate = [0,0];
+                if (transformStr) {
+                    translate = transformStr.substring(transformStr.indexOf("(")+1, transformStr.indexOf(")")).split(",");
+                    translate = translate.map(function(d) {
+                        return parseInt(d);
+                    })
+                }
+
+                var y = d.y + translate[1];
+                console.log(d.y, translate[1]);
+                console.log(y)
+                if (y < 250) {
+                    return 's';
+                }
+                else {
+                    return 'n';
+                }
+            })
+
             svg.call(
                 d3.zoom()
                     .scaleExtent([.1, 4])
                     .on("zoom", function() { container.attr("transform", d3.event.transform); })
             );
+            /* Invoke the tip in the context of your visualization */
+            svg.call(tip);
 
             const link = container.append("g")
                 .attr("stroke", "#999")
@@ -168,6 +209,7 @@ var app = new Vue({
                         return "node fear-node";
                     }
                 })
+                .style("cursor", "pointer")
                 .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
                 .call(drag(simulation))
                 .filter(".word-node")
@@ -201,10 +243,14 @@ var app = new Vue({
                     self.fear_item = d.fields;
                 }
                 container.selectAll(".node").style("opacity", function(o) {
+                    if (o.index == 0 && o.index !== index) { // ROOT
+                        return 0.1;
+                    }
+
                     return neigh(index, o.index) ? 1 : 0.1;
                 });
                 link.style("opacity", function(o) {
-                    if (o.source.index == 0 && index != 0) {
+                    if (o.source.index == 0 && index != 0) { // ROOT
                         return 0.1;
                     }
 
@@ -217,20 +263,27 @@ var app = new Vue({
                link.style("opacity", 1);
             }
 
-            container.selectAll(".node").on("mouseover", focus).on("mouseout", unfocus);
+            container.selectAll(".fear-node")
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide);
 
-            container.selectAll(".fear-node").on("click", function(d) {
-                self.modal_fear_item = d.fields;
-                console.log(self.modal_fear_item);
-                $("#fear-description-modal").modal();
-                // var imageIndex = $(this).attr("fearIndex");
-                // console.log(imageIndex);
-                // self.modal_fear_item = self.fear_items[imageIndex].fearItem.fields;
-                // $("#fear-description-modal").modal();
+            container.selectAll(".node").on("click", function(d) {
+                focus(d);
+
+                if (d3.event.shiftKey) {
+                    self.modal_fear_item = d.fields;
+                    console.log(self.modal_fear_item);
+                    $("#fear-description-modal").modal();
+                    $("#fear-description-modal").modal('show');
+                }
+
+                d3.event.stopPropagation();
             });
 
-
-
+            svg.on("click", function(d) {
+                unfocus();
+                // console.log("container!!");
+            });
 
                 // .append("circle")
                 // .attr("stroke", "#fff")

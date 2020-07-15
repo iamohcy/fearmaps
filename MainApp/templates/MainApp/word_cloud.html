@@ -6,6 +6,7 @@
 
 {% block custom_css %}
     <!-- Main.css -->
+    <link href="{% static "MainApp/css/ext/d3-tip.css" %}" rel="stylesheet">
     <link href="{% static "MainApp/css/word_cloud.css" %}" rel="stylesheet">
 {% endblock %}
 
@@ -13,19 +14,38 @@
 {% block content %}
 <!-- COLLECTION AREA -->
 
-<div class="row m-0" style="height: 100%; width: 100%;">
-    <div id="cloud-div" class="m-0 p-0" style="width: 100%;"></div>
-    <!-- <div id="cloud-div" class="m-0 p-0 col-lg-9" style="width: 100%;"></div> -->
-<!--     <div id="description-div" class="col-lg-3" style="height: auto; width: 100%;">
-
-        <div id="fear-item-div" style="width: 100%;" v-if="fear_item">
-            <img class="mt-0" v-bind:src="'/media/' + fear_item.image_1_tb" alt="Card image cap">
-            <img class="mt-1" v-if="fear_item.image_2_tb" v-bind:src="'/media/' + fear_item.image_2_tb" alt="Card image cap">
-            <div class="p-3 mt-1">
-                <template v-for="line in fear_item.fear_text.split('\n')"><p class="card-text">[[line]]</p></template>
-            </div>
+{% verbatim %}
+<script id="tooltip-template" type="text/x-handlebars-template">
+    <div id="tip-container-div">
+    {{#if fear_item.image_2}}
+        <div class="tip-image-div" id="tip-image-div-double">
+            <img class="mt-0 tip-image" src="/media/{{fear_item.image_1_tb}}" alt="Card image cap">
+            <!-- <img class="mt-0 tip-image" v-if="fear_item.image_2_tb" src="/media/{{fear_item.image_2_tb}}" alt="Card image cap"> -->
         </div>
-    </div> -->
+    {{else}}
+        <div class="tip-image-div" id="tip-image-div-single">
+            <img class="mt-0 tip-image" src="/media/{{fear_item.image_1_tb}}" alt="Card image cap">
+        </div>
+    {{/if}}
+
+    {{#if fear_text_present }}
+        <div id="tip-text-description-div" class="p-0 mt-2 tip-text-div" style="text-align: center;">
+            {{#each fear_text}}
+            <p class="tip-text">{{this}}</p>
+            {{/each}}
+        </div>
+    {{/if}}
+    </div>
+</script>
+{% endverbatim %}
+
+<div class="row m-0" style="height: 100%; width: 100%;">
+    <!-- <div id="cloud-div" class="m-0 p-0" style="width: 100%;"></div> -->
+    <div id="cloud-div" class="m-0 p-0 col-lg-10" style="width: 100%;"></div>
+    <div id="explanation-div" class="col-lg-2" style="height: auto; width: 100%;">
+        <p>This visualization consists of a network of the most commonly seen words in each fear description (ignoring common words like "the", "is", etc. The more common a word is, the larger it becomes in the visualization.</p>
+        <p>Hover over a node to view more information about it, or click it to view that word/fear node and all its connections in isolation. Shift+click a node to view the full entry.</p>
+    </div>
 </div>
 
 {% endblock %}
@@ -35,6 +55,8 @@
     <!-- Main.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src="{% static "MainApp/scripts/ext/d3-tip.js" %}" %}"></script>
     <script src="{% static "MainApp/scripts/word_cloud.js" %}" %}"></script>
 {% endblock %}
 
