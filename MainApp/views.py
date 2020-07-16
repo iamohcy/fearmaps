@@ -47,6 +47,8 @@ def get_word_cloud(request):
     DEFAULT_MIN_LINKS = 2 # minimum number of links a word must have to be included
     DEFAULT_MAX_WORDS = 50 # maximum number of words we want in our cloud
 
+    banned_words = ["im", "like", "just", "ones"]
+
     try:
         min_links = int(request.GET.get("min_links", DEFAULT_MIN_LINKS))
         max_words = int(request.GET.get("max_words", DEFAULT_MAX_WORDS))
@@ -86,13 +88,17 @@ def get_word_cloud(request):
         word = top_n_words[index][0]
         count = top_n_words[index][1]
 
+        if word.lower() in banned_words:
+            index += 1
+            continue
+
         if (count <= 1):
             break
 
         queryset = fearItems.filter(fear_text__icontains=word)
         remaining_queryset = remaining_queryset.exclude(fear_text__icontains=word)
         # allTexts.append([queryset.count(),[fearItem.fear_text for fearItem in queryset]])
-        if (queryset.count() > 0):
+        if (queryset.count() >= min_links):
             allTexts.append({"word":word,"fear_items":json.loads(serializers.serialize('json', queryset, fields=('pk','gender','age','country','fear_text','fear_colors_text','image_1','image_2','image_1_tb','image_2_tb','valid','date_created')))})
             num_words += 1
         index += 1
