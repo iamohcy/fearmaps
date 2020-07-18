@@ -37,7 +37,7 @@ $(function() {
         var item_id = $(this).attr("item_id");
         $.ajax({
             type: "POST",
-            url: "/delete_entry",
+            url: "/delete_entry/",
             ContentType: 'application/json',
             data: {'uuid':item_id}, // serializes the form's elements.
             success: function(data) {
