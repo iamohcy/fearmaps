@@ -248,7 +248,7 @@ def delete_entry(request):
         # form = LinkBggForm(request.POST) # A form bound to the POST data
         # if form.is_valid(): # All validation rules pass
     else:
-        return HttpResponse("Invalid non POST call to link_bgg!")
+        return HttpResponse("Invalid non POST call to delete_entry! - " + str(request.method))
 
 def submit(request):
     context = {'form':SubmissionForm()}
