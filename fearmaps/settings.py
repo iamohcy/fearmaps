@@ -19,10 +19,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ry+9=2gr=3g*jsc9043u1jd95u9z&p2e#@z&wz1k!nq&5n-sro'
+SECRET_KEY = 'notarealsecretkey'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['167.99.66.170', '127.0.0.1', 'localhost', 'mappingfear.com', '.mappingfear.com']
 
